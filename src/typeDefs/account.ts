@@ -28,16 +28,6 @@ export default gql`
   }
 
   """
-  Available account currencies
-  """
-  enum AccountCurrency {
-    """
-    USA dollars
-    """
-    USD
-  }
-
-  """
   Base unit of an accounting system
   Represents the individual "page" of bookkeeping, to which changes in value are chronologically recorded with debit and credit entries.
   """
@@ -61,7 +51,7 @@ export default gql`
     """
     Account currency
     """
-    currency: AccountCurrency!
+    currency: Currency!
 
     """
     When the account was created
