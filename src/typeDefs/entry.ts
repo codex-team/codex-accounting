@@ -17,7 +17,7 @@ export default gql`
   }
 
   """
-  Single record of the transaction
+  The single record of the transaction
   Debit or credit
   """
   type Entry {
@@ -42,7 +42,7 @@ export default gql`
     transactionId: String!
 
     """
-    Posive value of the record in minumal currency value (cents)
+    Positive value of the record in minumal currency value (cents)
     """
     amount: Int!
   }
