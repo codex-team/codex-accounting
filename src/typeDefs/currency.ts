@@ -6,11 +6,9 @@ export default gql`
   """
   enum Currency {
     """
-    USA dollars
+    USA dollars.
+    All amounts will be stored in cents.
     """
     USD
   }
 `
-
-
-

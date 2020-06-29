@@ -7,7 +7,7 @@ export default gql`
   """
   enum AccountType {
     """
-    When we need pay some money to someone
+    When we need to pay some money to someone
     """
     Liability
 
@@ -28,7 +28,7 @@ export default gql`
   }
 
   """
-  Base unit of an accounting system
+  The base unit of an accounting system
   Represents the individual "page" of bookkeeping, to which changes in value are chronologically recorded with debit and credit entries.
   """
   type Account {

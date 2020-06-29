@@ -38,13 +38,13 @@ export default gql`
     type: TransactionType!
 
     """
-    Show description of the transaction
+    The description of the transaction
     For example, "Payment by Mastercard ***1343"
     """
     description: String
 
     """
-    When the transaction appears
+    When the transaction did appeared
     """
     dtCrated: String!
 
