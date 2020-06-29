@@ -6,46 +6,58 @@ enum TransactionTypes {
   PURCHASE
 }
 
+/**
+ * Transaction service
+ */
 export default class Transaction {
   /**
    * Transaction identifier
    */
-  private _id: string = '';
+  public id: string = '';
 
   /**
    * Transaction entries
    */
-  private _entries: Entry[] = [];
+  public entries: Entry[] = [];
 
   /**
    * Is transaction already posted
    */
-  private posted: boolean = false;
+  public isPosted: boolean = false;
 
   /**
    * Transaction description
    */
-  private _description: string = '';
+  public description: string = '';
 
+  /**
+   * @param {Account} account
+   * @param {number} amount
+   */
   public debit(account: Account, amount: number) {
     const entry = new Entry();
 
     this.add(entry);
   }
 
+  /**
+   * @param {Account} account
+   * @param {number} amount
+   */
   public credit(account: Account, amount: number) {
     const entry = new Entry();
 
     this.add(entry);
   }
 
-  public isPosted(): boolean {
-    return this.posted;
-  }
-
-  public isBalanced(): boolean {
+  /**
+   * Checks transaction if it is balanced
+   *
+   * @returns boolean
+   */
+  public get isBalanced(): boolean {
     let result = 0;
-    this._entries.forEach((entry: Entry) => {
+    this.entries.forEach((entry: Entry) => {
       if (entry.isDebit()) {
         result += entry.amount;
       } else {
@@ -57,6 +69,6 @@ export default class Transaction {
   }
 
   private add(entry: Entry): void {
-    this._entries.push(entry);
+    this.entries.push(entry);
   }
 }

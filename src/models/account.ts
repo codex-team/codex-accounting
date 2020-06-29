@@ -16,26 +16,26 @@ export default class Account {
   /**
    * Account identifier
    */
-  private _id: string = '';
+  public id: string = '';
 
   /**
    * Account name
    */
-  private _name: string = '';
+  public name: string = '';
 
   /**
    * Account type
    */
-  private _type: number = AccountTypes.CR;
+  public type: number = AccountTypes.CR;
 
   /**
    * @param {AccountData} data
    */
   public constructor(data?: AccountData) {
     if (data) {
-      this._id = data.id;
-      this._name = data.name;
-      this._type = data.type;
+      this.id = data.id;
+      this.name = data.name;
+      this.type = data.type;
     }
   }
 
@@ -53,20 +53,5 @@ export default class Account {
     }
 
     throw new Error('Account type is not defined or is not correct');
-  }
-
-  public get id(): string
-  {
-    return this._id;
-  }
-
-  public get name(): string
-  {
-    return this._name;
-  }
-
-  public get type(): number
-  {
-    return this._type;
   }
 }
