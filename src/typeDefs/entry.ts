@@ -24,7 +24,7 @@ export default gql`
     """
     Entry identifier
     """
-    id: String!
+    id: ID!
 
     """
     Debit or credit
@@ -34,12 +34,12 @@ export default gql`
     """
     Related account
     """
-    accountId: String!
+    account: Account!
 
     """
     In which transaction this entry did appeared
     """
-    transactionId: String!
+    transaction: Transaction!
 
     """
     Positive value of the record in minumal currency value (cents)

@@ -7,22 +7,23 @@ export default gql`
   """
   enum AccountType {
     """
-    When we need to pay some money to someone
+    When we need to pay some money to someone (credit)
     """
     Liability
 
     """
-    When someone has some money
+    Something valuable belonging to a person or organization
+    that can be used for the payment of debts (debit) — Cashbook
     """
     Asset
 
     """
-    When we have some money earned from services
+    When we have some money earned from services (credit)
     """
     Revenue
 
     """
-    When we pay some our money for some serivces
+    When we pay some our money for some serivces (debit)
     """
     Expense
   }
@@ -35,7 +36,7 @@ export default gql`
     """
     Account id
     """
-    id: String!
+    id: ID!
 
     """
     Account name (for example, "Cashbook")

@@ -30,7 +30,7 @@ export default gql`
     """
     Transaction unique identifer
     """
-    id: String!
+    id: ID!
 
     """
     What kind of money movement
@@ -46,7 +46,7 @@ export default gql`
     """
     When the transaction did appeared
     """
-    dtCrated: String!
+    dtCreated: String!
 
     """
     List of debit and credit records.
