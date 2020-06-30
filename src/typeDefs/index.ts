@@ -3,6 +3,7 @@ import Currency from './currency';
 import Account from './account';
 import Entry from './entry';
 import Transaction from './transaction';
+import scalars from "./scalars";
 
 
 const rootSchema = gql`
@@ -30,6 +31,7 @@ const rootSchema = gql`
 export default concatenateTypeDefs(
   [
     rootSchema,
+    scalars,
     Currency,
     Account,
     Entry,
