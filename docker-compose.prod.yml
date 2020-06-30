@@ -9,5 +9,6 @@ services:
       - .env
     ports:
       - ${PORT}:${PORT}
+    network_mode: host
     volumes:
       - /usr/src/app/node_modules
