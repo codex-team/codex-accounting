@@ -11,14 +11,14 @@ export default gql`
     Deposit
 
     """
-    Payment for something
+    Removing out
     """
-    Expense
+    Withdrawal
 
     """
-    Money transfer operation
+    Payment for something
     """
-    Transfer
+    Purchase
   }
 
 
