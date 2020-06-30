@@ -4,25 +4,44 @@ import {Account} from "./account";
 /**
  * Available transaction types
  */
-export enum TransactionTypes {
-  DEPOSIT,
-  WITHDRAW,
-  PURCHASE
+export enum TransactionType {
+  Deposit,
+  Withdrawal,
+  Purchase
 }
 
 /**
  * Transaction data interface
  */
 export interface TransactionData {
+  /**
+   * Transaction unique identifier (UUIDv4)
+   */
   id: string,
-  type: number,
+
+  /**
+   * One of the transaction type described above
+   */
+  type: TransactionType,
+
+  /**
+   * Short transaction purpose
+   */
   description: string,
+
+  /**
+   * Transaction creation datetime
+   */
   dtCreated: number,
+
+  /**
+   * Transaction entries
+   */
   entries: Entry[]
 }
 
 /**
- * Transaction service
+ * Transaction Model
  */
 export default class Transaction {
   /**
@@ -31,9 +50,9 @@ export default class Transaction {
   public readonly id: string = '';
 
   /**
-   * Transaction type
+   * One of listed transaction types
    */
-  public readonly type: number;
+  public readonly type: TransactionType;
 
   /**
    * Creation date as unixtime
@@ -56,7 +75,7 @@ export default class Transaction {
   private posted: boolean = false;
 
   /**
-   * @param {TransactionData} data
+   * @param data
    */
   public constructor(data: TransactionData) {
     if (data.id.trim() === "") {
@@ -73,12 +92,14 @@ export default class Transaction {
   }
 
   /**
+   * Creates debit entry and adds to the list
+   *
    * @param {Account} account
    * @param {number} amount
    */
   public debit(account: Account, amount: number) {
     const entry = new Entry({
-      type: EntryType.DR,
+      type: EntryType.Dr,
       accountId: account.id,
       transactionId: this.id,
       amount: amount,
@@ -88,12 +109,14 @@ export default class Transaction {
   }
 
   /**
+   * Creates credit entry and adds to the list
+   *
    * @param {Account} account
    * @param {number} amount
    */
   public credit(account: Account, amount: number) {
     const entry = new Entry({
-      type: EntryType.CR,
+      type: EntryType.Cr,
       accountId: account.id,
       transactionId: this.id,
       amount: amount
@@ -120,14 +143,25 @@ export default class Transaction {
     return result === 0;
   }
 
-  public lock() {
+  /**
+   * Locks transaction so that it can not be posted again
+   */
+  public lock(): void {
     this.posted = true;
   }
 
+  /**
+   * True if it is already posted
+   */
   public isLocked(): boolean {
     return this.posted;
   }
 
+  /**
+   * Adds entry to the list
+   *
+   * @param entry - concrete debit or credit entry
+   */
   private add(entry: Entry): void {
     this.entries.push(entry);
   }

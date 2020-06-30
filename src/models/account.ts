@@ -1,20 +1,40 @@
 /**
- * Available Account types
+ * List of available account types
  */
-export enum AccountTypes {
-  DR = 100,
-  CR = 200
+export enum AccountType {
+  Dr = 100,
+  Cr = 200
 }
 
-/**
- * Account data interface
- */
 export interface AccountData {
+  /**
+   * Account unique identifier
+   */
   id: string,
+
+  /**
+   * Account name. Used to point the purpose
+   */
   name: string,
+
+  /**
+   * Account type according to the https://www.principlesofaccounting.com/account-types/
+   */
   type: number,
+
+  /**
+   * Account currency
+   */
   currency: string,
+
+  /**
+   * Account debit amount
+   */
   drAmount: number,
+
+  /**
+   * Account credit amount
+   */
   crAmount: number,
 }
 
@@ -35,7 +55,7 @@ export class Account {
   /**
    * Account type
    */
-  public readonly type: number = AccountTypes.CR;
+  public readonly type: AccountType = AccountType.Cr;
 
   /**
    * Account currency
@@ -53,7 +73,7 @@ export class Account {
   public readonly crAmount: number = 0;
 
   /**
-   * @param {AccountData} data
+   * @param data
    */
   public constructor(data?: AccountData) {
     if (data) {
@@ -70,11 +90,11 @@ export class Account {
    * Returns current account balance
    */
   public get balance(): number {
-    if (this.type === AccountTypes.DR) {
+    if (this.type === AccountType.Dr) {
       return this.drAmount - this.crAmount;
     }
 
-    if (this.type === AccountTypes.CR) {
+    if (this.type === AccountType.Cr) {
       return this.crAmount - this.drAmount;
     }
 

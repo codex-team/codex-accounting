@@ -1,13 +1,19 @@
 import Transaction, {TransactionData} from "../models/transaction";
 
+/**
+ * High level TransactionService interface
+ */
 interface TransactionServiceInterface {
+  /**
+   * Stores and locks transaction
+   *
+   * @param transaction
+   */
   commit(transaction: Transaction): void;
-  hold(transaction: Transaction): void;
-  rollback(transaction: Transaction): void;
 }
 
 /**
- * Transaction service implementation
+ * Concrete TransactionService implementation of its interface. Uses MongoDB
  */
 export default class TransactionService implements TransactionServiceInterface {
   public commit(transaction: Transaction): void {
@@ -27,15 +33,9 @@ export default class TransactionService implements TransactionServiceInterface {
       entries: transaction.entries
     } as TransactionData;
 
-    // store
+    //@todo Store to the MongoDB
 
-    // and lock
+    /** lock transaction */
     transaction.lock();
-  }
-
-  public hold(transaction: Transaction): void {
-  }
-
-  public rollback(transaction: Transaction) {
   }
 }

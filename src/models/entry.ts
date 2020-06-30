@@ -1,18 +1,33 @@
 /**
- * Available entry types
+ * Available entry types (debit or credit)
  */
 export enum EntryType {
-  DR,
-  CR
+  Dr,
+  Cr
 }
 
 /**
  * Entry Data interface
  */
 export interface EntryData {
-  type: number,
+  /**
+   * Entry type according to the enumerated list
+   */
+  type: EntryType,
+
+  /**
+   * Reference to the account
+   */
   accountId: string,
+
+  /**
+   * Reference to the transaction
+   */
   transactionId: string,
+
+  /**
+   * Entry amount
+   */
   amount: number
 }
 
@@ -23,7 +38,7 @@ export class Entry {
   /**
    * Represents entry debit or credit type
    */
-  public readonly type: number = EntryType.DR;
+  public readonly type: number = EntryType.Dr;
 
   /**
    * Reference to Account ID
@@ -41,7 +56,7 @@ export class Entry {
   public readonly amount: number = 0;
 
   /**
-   * @param {EntryData} data
+   * @param data
    */
   public constructor(data: EntryData) {
     if (data.amount < 0) {
@@ -68,7 +83,7 @@ export class Entry {
    * @returns {boolean}
    */
   public isDebit(): boolean {
-    return this.type === EntryType.DR;
+    return this.type === EntryType.Dr;
   }
 
   /**
@@ -77,6 +92,6 @@ export class Entry {
    * @returns {boolean}
    */
   public isCredit(): boolean {
-    return this.type === EntryType.CR;
+    return this.type === EntryType.Cr;
   }
 }
