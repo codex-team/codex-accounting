@@ -44,6 +44,6 @@ export default gql`
     """
     Positive value of the record in minumal currency value (cents)
     """
-    amount: Int!
+    amount: NonNegativeInt!
   }
 `
