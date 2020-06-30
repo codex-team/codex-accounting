@@ -59,4 +59,4 @@ export default gql`
     """
     dtCreated: DateTime!
   }
-`
+`;
