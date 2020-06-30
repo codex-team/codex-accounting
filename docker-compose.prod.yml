@@ -1,0 +1,15 @@
+version: "3.4"
+
+services:
+  codex-accounting-prod:
+    build:
+      dockerfile: "docker/Dockerfile.prod"
+      context: .
+    env_file:
+      - .env
+    ports:
+      - ${PORT}:${PORT}
+    volumes:
+      - ./.env:/usr/src/app/.env
+      - ./uploads:/usr/src/app/uploads
+      - /usr/src/app/node_modules

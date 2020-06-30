@@ -1,0 +1,9 @@
+node_modules
+test
+.env
+.github
+.editorconfig
+docker
+docker-compose.dev.yml
+docker-compose.prod.yml
+build
