@@ -1,4 +1,6 @@
 import merge from 'lodash.merge'
+import scalars from "./scalars";
+
 /**
  * See all types and fields here {@link ../typeDefs/}
  */
@@ -12,4 +14,4 @@ const indexResolver = {
     },
 };
 
-export default merge(indexResolver);
+export default merge(indexResolver, scalars);
