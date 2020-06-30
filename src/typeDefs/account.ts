@@ -57,6 +57,6 @@ export default gql`
     """
     When the account was created
     """
-    dtCreated: Float!
+    dtCreated: DateTime!
   }
 `

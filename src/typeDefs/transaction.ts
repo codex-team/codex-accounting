@@ -46,7 +46,7 @@ export default gql`
     """
     When the transaction did appeared
     """
-    dtCreated: String!
+    dtCreated: DateTime!
 
     """
     List of debit and credit records.
