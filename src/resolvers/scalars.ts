@@ -9,5 +9,5 @@ export default {
   /**
    * Integers that will have a value of 0 or more
    */
-  NonNegativeInt: NonNegativeIntResolver
+  NonNegativeInt: NonNegativeIntResolver,
 };
