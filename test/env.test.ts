@@ -1,4 +1,4 @@
-import '../env-test';
+import '../src/env-test';
 
 describe('Test environment', () => {
   test('Variable POST is defined', async () => {

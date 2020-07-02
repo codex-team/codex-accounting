@@ -1,0 +1,19 @@
+version: "3.2"
+services:
+  codex-accounting-dev:
+    build:
+      dockerfile: "docker/Dockerfile.dev"
+      context: .
+    user: "node"
+    env_file:
+      - .env
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - ${PORT}:${PORT}
+    stdin_open: true
+    tty: true
+
+volumes:
+  mongodata:

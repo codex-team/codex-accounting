@@ -1,12 +1,12 @@
-import {ApolloServer} from 'apollo-server-express';
+import { ApolloServer } from 'apollo-server-express';
 import express from 'express';
 import http from 'http';
 import resolvers from './resolvers';
 import typeDefs from './typeDefs';
-import {GraphQLError} from 'graphql';
+import { GraphQLError } from 'graphql';
 import HawkCatcher from '@hawk.so/nodejs';
-import {NonCriticalError} from "./errors";
-import {express as voyagerMiddleware} from 'graphql-voyager/middleware';
+import { NonCriticalError } from './errors';
+import { express as voyagerMiddleware } from 'graphql-voyager/middleware';
 
 /**
  * Hawk API server
@@ -17,6 +17,9 @@ class AccountantServer {
    */
   private readonly serverPort: number;
 
+  /**
+   * Is playground enable on GET /graphql route
+   */
   private readonly enablePlayground: boolean;
 
   /**
@@ -37,12 +40,15 @@ class AccountantServer {
   /**
    * Creates an instance of HawkAPI.
    * Requires PORT and MONGO_URL env vars to be set.
+   *
+   * @param serverPort - port to listen for requests
+   * @param enablePlayground - is playground enable on GET /graphql route
    */
   constructor(serverPort: number, enablePlayground: boolean) {
     this.serverPort = serverPort;
     this.enablePlayground = enablePlayground;
     this.app.use(express.json());
-    this.app.use('/voyager', voyagerMiddleware({endpointUrl: '/graphql'}));
+    this.app.use('/voyager', voyagerMiddleware({ endpointUrl: '/graphql' }));
 
     this.server = new ApolloServer({
       typeDefs,
@@ -64,7 +70,7 @@ class AccountantServer {
       },
     });
 
-    this.server.applyMiddleware({app: this.app});
+    this.server.applyMiddleware({ app: this.app });
     /**
      * In apollo-server-express integration it is necessary to use existing HTTP server to use GraphQL subscriptions
      * {@see https://www.apollographql.com/docs/apollo-server/features/subscriptions/#subscriptions-with-additional-middleware}
@@ -78,7 +84,7 @@ class AccountantServer {
    */
   public async start(): Promise<void> {
     return new Promise((resolve) => {
-      this.httpServer.listen({port: this.serverPort}, () => {
+      this.httpServer.listen({ port: this.serverPort }, () => {
         console.log(
           `🚀 Server ready at http://localhost:${this.serverPort}${
             this.server.graphqlPath
