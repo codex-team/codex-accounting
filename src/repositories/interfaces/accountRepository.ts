@@ -1,4 +1,4 @@
-import {Account} from "../../models/account";
+import { Account } from '../../models/account';
 
 /**
  * AccountRepository interface
@@ -25,4 +25,3 @@ export interface IAccountRepository {
    */
   update(account: Account): void;
 }
-

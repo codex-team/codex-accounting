@@ -1,7 +1,7 @@
 /**
  * List of available account types
  */
-import {BaseModel} from "./baseModel";
+import { BaseModel } from './baseModel';
 
 export enum Currency {
   USD
@@ -31,32 +31,32 @@ export interface AccountData {
   /**
    * Account unique identifier
    */
-  id: string,
+  id: string;
 
   /**
    * Account name. Used to point the purpose
    */
-  name: string,
+  name: string;
 
   /**
    * Account type according to the https://www.principlesofaccounting.com/account-types/
    */
-  type: AccountType,
+  type: AccountType;
 
   /**
    * Account currency
    */
-  currency: Currency,
+  currency: Currency;
 
   /**
    * Account debit amount
    */
-  drAmount: number,
+  drAmount: number;
 
   /**
    * Account credit amount
    */
-  crAmount: number,
+  crAmount: number;
 }
 
 /**
@@ -96,11 +96,11 @@ export class Account extends BaseModel {
   /**
    * @param data - account payload
    */
-  public constructor(data: AccountData) {
+  constructor(data: AccountData) {
     super();
 
-    if (data.id === "") {
-      this.id = "123321";
+    if (data.id === '') {
+      this.id = '123321';
     }
 
     this.name = data.name;
@@ -128,16 +128,14 @@ export class Account extends BaseModel {
   /**
    * Returns true if it is debit account
    */
-  private isDebitAccount(): boolean
-  {
+  private isDebitAccount(): boolean {
     return debitAccounts.indexOf(this.type) !== -1;
   }
 
   /**
    * Returns true if it is credit account
    */
-  private isCreditAccount(): boolean
-  {
-    return creditAccounts.indexOf(this.type) !== -1
+  private isCreditAccount(): boolean {
+    return creditAccounts.indexOf(this.type) !== -1;
   }
 }

@@ -1,5 +1,5 @@
-import {Entry, EntryType} from "./entry";
-import {Account} from "./account";
+import { Entry, EntryType } from './entry';
+import { Account } from './account';
 
 /**
  * Available transaction types
@@ -28,27 +28,27 @@ export interface TransactionData {
   /**
    * Transaction unique identifier (UUIDv4)
    */
-  id: string,
+  id: string;
 
   /**
    * One of the transaction type described above
    */
-  type: TransactionType,
+  type: TransactionType;
 
   /**
    * Short transaction purpose
    */
-  description: string,
+  description: string;
 
   /**
    * Transaction creation datetime
    */
-  dtCreated: number,
+  dtCreated: number;
 
   /**
    * Transaction entries
    */
-  entries: Entry[]
+  entries: Entry[];
 }
 
 /**
@@ -83,14 +83,14 @@ export default class Transaction {
   /**
    * Is transaction already posted
    */
-  private posted: boolean = false;
+  private posted = false;
 
   /**
    * @param data - transaction payload
    */
-  public constructor(data: TransactionData) {
-    if (data.id.trim() === "") {
-      this.id = "generated UUIDv4";
+  constructor(data: TransactionData) {
+    if (data.id.trim() === '') {
+      this.id = 'generated UUIDv4';
     } else {
       this.id = data.id;
       this.posted = true;
@@ -119,6 +119,7 @@ export default class Transaction {
     });
 
     this.add(entry);
+
     return this;
   }
 
@@ -135,10 +136,11 @@ export default class Transaction {
       type: EntryType.Cr,
       accountId: account.id,
       transactionId: this.id,
-      amount: amount
+      amount: amount,
     });
 
     this.add(entry);
+
     return this;
   }
 
@@ -149,13 +151,14 @@ export default class Transaction {
    */
   public isBalanced(): boolean {
     let result = 0;
+
     this.entries.forEach((entry: Entry) => {
       if (entry.isDebit()) {
         result += entry.amount;
       } else {
         result -= entry.amount;
       }
-    })
+    });
 
     return result === 0;
   }

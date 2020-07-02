@@ -20,22 +20,22 @@ export interface EntryData {
   /**
    * Entry type according to the enumerated list
    */
-  type: EntryType,
+  type: EntryType;
 
   /**
    * Reference to the account
    */
-  accountId: string,
+  accountId: string;
 
   /**
    * Reference to the transaction
    */
-  transactionId: string,
+  transactionId: string;
 
   /**
    * Entry amount
    */
-  amount: number
+  amount: number;
 }
 
 /**
@@ -65,17 +65,17 @@ export class Entry {
   /**
    * @param data - entry payload
    */
-  public constructor(data: EntryData) {
+  constructor(data: EntryData) {
     if (data.amount < 0) {
-      throw new Error("Amount must be positive")
+      throw new Error('Amount must be positive');
     }
 
-    if (data.accountId.trim() === "") {
-      throw new Error("Account ID is empty");
+    if (data.accountId.trim() === '') {
+      throw new Error('Account ID is empty');
     }
 
-    if (data.transactionId.trim() === "") {
-      throw new Error("Transaction ID is empty");
+    if (data.transactionId.trim() === '') {
+      throw new Error('Transaction ID is empty');
     }
 
     this.type = data.type;

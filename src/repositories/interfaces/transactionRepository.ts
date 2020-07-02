@@ -1,4 +1,4 @@
-import Transaction from "../../models/transaction";
+import Transaction from '../../models/transaction';
 
 /**
  * High level TransactionRepository interface
