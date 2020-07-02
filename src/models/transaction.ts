@@ -5,8 +5,19 @@ import {Account} from "./account";
  * Available transaction types
  */
 export enum TransactionType {
+  /**
+   * Transaction that increases account and cashbook
+   */
   Deposit,
+
+  /**
+   * Transaction that decreases account and cashbook
+   */
   Withdrawal,
+
+  /**
+   * Tranasction that decreases account and increases our revenue
+   */
   Purchase
 }
 
@@ -75,7 +86,7 @@ export default class Transaction {
   private posted: boolean = false;
 
   /**
-   * @param data
+   * @param data - transaction payload
    */
   public constructor(data: TransactionData) {
     if (data.id.trim() === "") {
@@ -96,8 +107,10 @@ export default class Transaction {
    *
    * @param {Account} account
    * @param {number} amount
+   *
+   * @returns {Transaction}
    */
-  public debit(account: Account, amount: number) {
+  public debit(account: Account, amount: number): this {
     const entry = new Entry({
       type: EntryType.Dr,
       accountId: account.id,
@@ -106,6 +119,7 @@ export default class Transaction {
     });
 
     this.add(entry);
+    return this;
   }
 
   /**
@@ -113,8 +127,10 @@ export default class Transaction {
    *
    * @param {Account} account
    * @param {number} amount
+   *
+   * @returns {Transaction}
    */
-  public credit(account: Account, amount: number) {
+  public credit(account: Account, amount: number): this {
     const entry = new Entry({
       type: EntryType.Cr,
       accountId: account.id,
@@ -123,6 +139,7 @@ export default class Transaction {
     });
 
     this.add(entry);
+    return this;
   }
 
   /**

@@ -1,21 +1,10 @@
-import Transaction, {TransactionData} from "../models/transaction";
-
-/**
- * High level TransactionService interface
- */
-interface TransactionServiceInterface {
-  /**
-   * Stores and locks transaction
-   *
-   * @param transaction
-   */
-  commit(transaction: Transaction): void;
-}
+import Transaction, {TransactionData} from "../../models/transaction";
+import {ITransactionRepository} from "../interfaces/transactionRepository";
 
 /**
  * Concrete TransactionService implementation of its interface. Uses MongoDB
  */
-export default class TransactionService implements TransactionServiceInterface {
+export default class TransactionRepository implements ITransactionRepository {
   public commit(transaction: Transaction): void {
     if (transaction.isLocked()) {
       throw new Error('Transaction already posted');

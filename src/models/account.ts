@@ -1,11 +1,32 @@
 /**
  * List of available account types
  */
-export enum AccountType {
-  Dr = 100,
-  Cr = 200
+import {BaseModel} from "./baseModel";
+
+export enum Currency {
+  USD
 }
 
+export enum AccountType {
+  Liability,
+  Asset,
+  Revenue,
+  Expense
+}
+
+/**
+ * The list of debit accounts
+ */
+const debitAccounts = [AccountType.Asset, AccountType.Expense];
+
+/**
+ * The list of credit accounts
+ */
+const creditAccounts = [AccountType.Liability, AccountType.Revenue];
+
+/**
+ * Payload that used to initialize Account model
+ */
 export interface AccountData {
   /**
    * Account unique identifier
@@ -20,12 +41,12 @@ export interface AccountData {
   /**
    * Account type according to the https://www.principlesofaccounting.com/account-types/
    */
-  type: number,
+  type: AccountType,
 
   /**
    * Account currency
    */
-  currency: string,
+  currency: Currency,
 
   /**
    * Account debit amount
@@ -41,7 +62,7 @@ export interface AccountData {
 /**
  * Account Model
  */
-export class Account {
+export class Account extends BaseModel {
   /**
    * Account identifier
    */
@@ -55,12 +76,12 @@ export class Account {
   /**
    * Account type
    */
-  public readonly type: AccountType = AccountType.Cr;
+  public readonly type: AccountType = AccountType.Liability;
 
   /**
    * Account currency
    */
-  public readonly currency: string = '';
+  public readonly currency: Currency = Currency.USD;
 
   /**
    * Debit amount
@@ -73,31 +94,50 @@ export class Account {
   public readonly crAmount: number = 0;
 
   /**
-   * @param data
+   * @param data - account payload
    */
-  public constructor(data?: AccountData) {
-    if (data) {
-      this.id = data.id;
-      this.name = data.name;
-      this.type = data.type;
-      this.currency = data.currency;
-      this.drAmount = data.drAmount;
-      this.crAmount = data.crAmount;
+  public constructor(data: AccountData) {
+    super();
+
+    if (data.id === "") {
+      this.id = "123321";
     }
+
+    this.name = data.name;
+    this.type = data.type;
+    this.currency = data.currency;
+    this.drAmount = data.drAmount;
+    this.crAmount = data.crAmount;
   }
 
   /**
    * Returns current account balance
    */
   public get balance(): number {
-    if (this.type === AccountType.Dr) {
+    if (this.isDebitAccount()) {
       return this.drAmount - this.crAmount;
     }
 
-    if (this.type === AccountType.Cr) {
+    if (this.isCreditAccount()) {
       return this.crAmount - this.drAmount;
     }
 
     throw new Error('Account type is not defined or is not correct');
+  }
+
+  /**
+   * Returns true if it is debit account
+   */
+  private isDebitAccount(): boolean
+  {
+    return debitAccounts.indexOf(this.type) !== -1;
+  }
+
+  /**
+   * Returns true if it is credit account
+   */
+  private isCreditAccount(): boolean
+  {
+    return creditAccounts.indexOf(this.type) !== -1
   }
 }

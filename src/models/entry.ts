@@ -2,12 +2,19 @@
  * Available entry types (debit or credit)
  */
 export enum EntryType {
+  /**
+   * Debit entry
+   */
   Dr,
+
+  /**
+   * Credit entry
+   */
   Cr
 }
 
 /**
- * Entry Data interface
+ * Payload that described an Entry
  */
 export interface EntryData {
   /**
@@ -38,7 +45,7 @@ export class Entry {
   /**
    * Represents entry debit or credit type
    */
-  public readonly type: number = EntryType.Dr;
+  public readonly type: EntryType = EntryType.Dr;
 
   /**
    * Reference to Account ID
@@ -56,7 +63,7 @@ export class Entry {
   public readonly amount: number = 0;
 
   /**
-   * @param data
+   * @param data - entry payload
    */
   public constructor(data: EntryData) {
     if (data.amount < 0) {
