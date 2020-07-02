@@ -105,8 +105,8 @@ export default class Transaction {
   /**
    * Creates debit entry and adds to the list
    *
-   * @param {Account} account
-   * @param {number} amount
+   * @param {Account} account - target account
+   * @param {number} amount - entry amount
    *
    * @returns {Transaction}
    */
@@ -126,8 +126,8 @@ export default class Transaction {
   /**
    * Creates credit entry and adds to the list
    *
-   * @param {Account} account
-   * @param {number} amount
+   * @param {Account} account - target account
+   * @param {number} amount - entry amount
    *
    * @returns {Transaction}
    */
@@ -146,8 +146,6 @@ export default class Transaction {
 
   /**
    * Checks transaction if it is balanced
-   *
-   * @returns boolean
    */
   public isBalanced(): boolean {
     let result = 0;

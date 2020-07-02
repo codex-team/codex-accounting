@@ -12,34 +12,12 @@ export default class AccountRepository implements IAccountRepository {
     // @todo Here we fetch MongoDB to get account data and dr/cr amount
 
     return new Account({
-      id: '111111',
+      id: id,
       name: 'Workspace account',
       type: AccountType.Liability,
       currency: Currency.USD,
       drAmount: 200,
       crAmount: 400,
     });
-  }
-
-  public create/**
-                *
-                *//**
-                   *
-                   *//**
-                      *
-                      *//**
-                         *
-                         */(account: Account) {
-  }
-
-  public update/**
-                *
-                *//**
-                   *
-                   *//**
-                      *
-                      *//**
-                         *
-                         */(account: Account) {
   }
 }
