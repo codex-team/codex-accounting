@@ -2,7 +2,7 @@ import Transaction, {TransactionData} from "../../models/transaction";
 import {ITransactionRepository} from "../interfaces/transactionRepository";
 
 /**
- * Concrete TransactionService implementation of its interface. Uses MongoDB
+ * Concrete ITransactionRepository implementation. Uses MongoDB
  */
 export default class TransactionRepository implements ITransactionRepository {
   public commit(transaction: Transaction): void {

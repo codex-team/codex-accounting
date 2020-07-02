@@ -2,7 +2,7 @@ import {Account, AccountType, Currency} from "../../models/account";
 import {IAccountRepository} from "../interfaces/accountRepository";
 
 /**
- * This class is concrete implementation of AccountServiceInterface that uses MongoDB as a storage
+ * This class is concrete implementation of IAccountRepository that uses MongoDB as a storage
  */
 export default class AccountRepository implements IAccountRepository {
   /**
