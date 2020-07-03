@@ -1,16 +1,34 @@
-/**
- * List of available account types
- */
 import { BaseModel } from './baseModel';
 
+/**
+ * The list of available Currencies
+ */
 export enum Currency {
   USD
 }
 
+/**
+ * List of available account types
+ */
 export enum AccountType {
+  /**
+   * Credit account that represents debts before customers
+   */
   Liability,
+
+  /**
+   * Debit account, used as a cashbook
+   */
   Asset,
+
+  /**
+   * Credit account that represents company incomes
+   */
   Revenue,
+
+  /**
+   * Debit account that represents company outcomes
+   */
   Expense
 }
 
@@ -99,7 +117,7 @@ export class Account extends BaseModel {
   constructor(data: AccountData) {
     super();
 
-    if (data.id === '') {
+    if (!data.id) {
       this.id = '123321';
     }
 

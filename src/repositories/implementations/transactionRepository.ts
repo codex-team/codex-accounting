@@ -6,6 +6,9 @@ import { ITransactionRepository } from '../interfaces/transactionRepository';
  */
 export default class TransactionRepository implements ITransactionRepository {
   /**
+   * This method used to validate and store the transaction
+   * The transaction passed once or not balanced cannot be committed
+   *
    * @param transaction - target transaction
    */
   public commit(transaction: Transaction): void {
