@@ -1,11 +1,14 @@
-import { Account, AccountType, Currency } from '../../models/account';
+import { Account, AccountType } from '../../models/account';
 import { IAccountRepository } from '../interfaces/accountRepository';
+import { Currency } from '../../types/currency';
 
 /**
  * This class is concrete implementation of IAccountRepository that uses MongoDB as a storage
  */
 export default class AccountRepository implements IAccountRepository {
   /**
+   * Fetches MongoDB to get AccountData and returns Account Model
+   *
    * @param id - account identifier
    */
   public getAccount(id: string): Account {

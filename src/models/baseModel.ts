@@ -1,5 +1,5 @@
 /**
- *
+ * Abstract Base Model
  */
-export class BaseModel {
+export abstract class BaseModel {
 }

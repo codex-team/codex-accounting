@@ -1,11 +1,5 @@
 import { BaseModel } from './baseModel';
-
-/**
- * The list of available Currencies
- */
-export enum Currency {
-  USD
-}
+import { Currency } from '../types/currency';
 
 /**
  * List of available account types
