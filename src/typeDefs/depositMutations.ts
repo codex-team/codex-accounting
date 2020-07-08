@@ -11,7 +11,7 @@ export default gql`
     accountId: String!
 
     """
-    Depositing amount (account currency will be used)
+    Positive number to increase account balance
     """
     amount: Int!
   }

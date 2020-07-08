@@ -11,7 +11,7 @@ export default gql`
     accountId: String!
 
     """
-    Bill amount
+    The cost of service or payment amount
     """
     amount: Int!
   }

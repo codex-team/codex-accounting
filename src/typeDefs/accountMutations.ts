@@ -2,16 +2,17 @@ import { gql } from 'apollo-server-express';
 
 export default gql`
   """
-  Account creation input
+  Account creation mutation input
   """
   input AccountInput {
     """
-    Account name that describes purpose or its aim
+    String that describes account purpose
     """
     name: String!
 
     """
     Account type according to the balance sheet
+    See: https://www.principlesofaccounting.com/account-types/
     """
     type: AccountType!
 

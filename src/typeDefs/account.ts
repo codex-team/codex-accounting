@@ -27,7 +27,7 @@ export default gql`
     dtCreated: DateTime!
 
     """
-    Account last operations
+    Last operations with account (deposits, purchases or others)
     """
     history: [Operation]
   }
