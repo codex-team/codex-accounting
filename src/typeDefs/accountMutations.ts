@@ -29,5 +29,4 @@ export default gql`
       input: AccountInput!
     ): ID
   }
-`
-
+`;

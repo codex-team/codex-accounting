@@ -24,5 +24,4 @@ export default gql`
       input: PurchaseInput!
     ): Int
   }
-`
-
+`;
