@@ -21,7 +21,6 @@ export default gql`
     Purchase
   }
 
-
   """
   Represents a single money transfer operation.
   MUST contain debit and credit entries with the balanced (=0) total amount
