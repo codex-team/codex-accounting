@@ -35,7 +35,7 @@ export default gql`
     """
     Operation date
     """
-    dateCreated: DateTime!
+    dtCreated: DateTime!
 
     """
     Positive value of the record in minumal currency value (cents)

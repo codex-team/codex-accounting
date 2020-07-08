@@ -13,7 +13,7 @@ export default gql`
     """
     The cost of service or payment amount
     """
-    amount: Int!
+    amount: NonNegativeInt!
   }
 
   extend type Mutation {

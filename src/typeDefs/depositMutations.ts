@@ -13,7 +13,7 @@ export default gql`
     """
     Positive number to increase account balance
     """
-    amount: Int!
+    amount: NonNegativeInt!
   }
 
   extend type Mutation {

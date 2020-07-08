@@ -26,8 +26,8 @@ export default gql`
     """
     Creates new account
     """
-    create(
+    createAccount(
       input: AccountInput!
-    ): ID
+    ): Account
   }
 `;

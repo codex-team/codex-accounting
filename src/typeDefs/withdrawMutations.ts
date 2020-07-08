@@ -2,9 +2,9 @@ import { gql } from 'apollo-server-express';
 
 export default gql`
   """
-  Withdrawal input arguments
+  Withdraw input arguments
   """
-  input WithdrawalInput {
+  input WithdrawInput {
     """
     Withdrawing account identifier
     """
@@ -13,15 +13,15 @@ export default gql`
     """
     Withdrawing amount (account currency will be used)
     """
-    amount: Int!
+    amount: NonNegativeInt!
   }
 
   extend type Mutation {
     """
-    Withdrawal operation. Decreases account balance and cashbook
+    Withdraw operation. Decreases account balance and cashbook
     """
-    withdrawal(
-      input: WithdrawalInput!
+    withdraw(
+      input: WithdrawInput!
     ): Int
   }
 `;
