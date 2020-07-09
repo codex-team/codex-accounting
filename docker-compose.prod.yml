@@ -12,3 +12,9 @@ services:
     network_mode: host
     volumes:
       - /usr/src/app/node_modules
+    depends_on:
+      - mongodb
+  mongodb:
+    image: mongo:4.2
+    env_file:
+      - .env

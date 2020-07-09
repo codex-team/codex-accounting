@@ -26,7 +26,9 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "ts-node-dev": "^1.0.0-pre.49",
-    "typescript": "^3.9.5"
+    "typescript": "^3.9.5",
+    "mongodb": "^3.5.7",
+    "@types/mongodb": "^3.5.15"
   },
   "devDependencies": {
     "@types/jest": "^26.0.3",
