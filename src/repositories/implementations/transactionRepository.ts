@@ -1,15 +1,23 @@
 import Transaction from '../../models/transaction';
 import { ITransactionRepository } from '../interfaces/transactionRepository';
-import { DatabaseController } from "../../controller";
+import { Db } from 'mongodb';
 
 /**
  * Concrete ITransactionRepository implementation. Uses MongoDB
  */
 export default class TransactionRepository implements ITransactionRepository {
-  private dbController: DatabaseController;
+  /**
+   * MongoDB client
+   */
+  private db: Db;
 
-  constructor(dbController: DatabaseController) {
-    this.dbController = dbController;
+  /**
+   * Creates account transaction instance
+   *
+   * @param db - MongoDB client
+   */
+  constructor(db: Db) {
+    this.db = db;
   }
 
   /**
@@ -34,7 +42,7 @@ export default class TransactionRepository implements ITransactionRepository {
     //   dtCreated: transaction.dtCreated,
     //   entries: transaction.entries,
     // } as TransactionData;
-    // await this.dbController.getConnection().collection('transaction').insertOne(data);
+    // await this.db.collection('transaction').insertOne(data);
     // @todo Store to the MongoDB
 
     /** lock transaction */

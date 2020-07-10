@@ -8,12 +8,12 @@ export class DatabaseController {
   /**
    * MongoDB client
    */
-  private db: Db;
+  private db: Db | undefined;
 
   /**
    * Mongo connection
    */
-  private connection: MongoClient;
+  private connection: MongoClient | undefined;
 
   /**
    * MongoDB connection URI
@@ -34,9 +34,6 @@ export class DatabaseController {
 
   /**
    * Connect to database
-   * Requires `MONGO_DSN` environment variable to be set
-   *
-   * @throws {Error} if `MONGO_DSN` is not set
    */
   public async connect(): Promise<Db> {
     if (this.db) {
@@ -62,21 +59,19 @@ export class DatabaseController {
    * @returns {Promise<void>}
    */
   public async close(): Promise<void> {
-    this.db = null;
+    this.db = undefined;
 
     if (!this.connection) {
       return;
     }
 
-    // this.gridFsBucket = null;
-
     return this.connection.close();
   }
 
   /**
-   * @returns {*|null}
+   * @returns {Db|undefined}
    */
-  public getConnection(): Db {
+  public getConnection(): Db | undefined {
     return this.db;
   }
 }

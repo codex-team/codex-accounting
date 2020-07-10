@@ -15,6 +15,13 @@ if (!process.env.PORT) {
   process.exit(1);
 }
 
+// if (!process.env.MONGO_ACCOUNTING_DATABASE_URI) {
+//   console.error('Please, specify mongodb uri via .env MONGO_ACCOUNTING_DATABASE_URI option');
+//   process.exit(1);
+// }
+// const dbController = new DatabaseController(process.env.MONGO_ACCOUNTING_DATABASE_URI);
+// @todo create repositories
+
 const server = new AccountantServer(+process.env.PORT, process.env.PLAYGROUND_ENABLE === 'true');
 
 server.start().catch(err => {
