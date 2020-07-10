@@ -4,22 +4,6 @@ on:
   - push
 
 jobs:
-  mongodb:
-    runs-on: ubuntu-latest
-    name: Test mongo-action
-    steps:
-      - name: Create mongo Docker container
-        id: build_mongo_docker
-        uses: DigiPie/mongo-action@v1.0.0
-        with:
-          image-version: latest
-          port: 27017
-      - name: Install mongodb-clients
-        id: install_mongodb_clients
-        run: sudo apt install mongodb-clients
-      - name: Test mongo connection
-        id: test_mongo_connection
-        run: "sudo mongo localhost:27017"
   build:
     name: Run Jest tests
     runs-on: ubuntu-latest
@@ -32,4 +16,3 @@ jobs:
       - name: Run tests
         run: yarn test
       - uses: codecov/codecov-action@v1
-
