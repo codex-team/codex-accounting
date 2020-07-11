@@ -16,12 +16,22 @@ export default gql`
     amount: NonNegativeInt!
   }
 
+  """
+  Special type for withdraw response
+  """
+  type WithdrawResponse {
+    """
+    Withdraw transaction identifier
+    """
+    transactionID: ID!
+  }
+
   extend type Mutation {
     """
     Withdraw operation. Decreases account balance and cashbook
     """
     withdraw(
       input: WithdrawInput!
-    ): Int
+    ): WithdrawResponse
   }
 `;

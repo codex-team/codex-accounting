@@ -16,12 +16,22 @@ export default gql`
     amount: NonNegativeInt!
   }
 
+  """
+  Special type for purchase response
+  """
+  type PurchaseResponse {
+    """
+    Purchase transaction identifier
+    """
+    transactionID: ID!
+  }
+
   extend type Mutation {
     """
     Purchase operation. Decreases account balance and increases revenue
     """
     purchase(
       input: PurchaseInput!
-    ): Int
+    ): PurchaseResponse
   }
 `;

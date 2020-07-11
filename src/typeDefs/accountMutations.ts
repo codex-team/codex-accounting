@@ -22,12 +22,33 @@ export default gql`
     currency: Currency!
   }
 
-  extend type Mutation {
+  """
+  Account response format on creation
+  """
+  type CreateAccountResponse {
+    """
+    New created account identifier
+    """
+    id: ID!
+  }
+
+  """
+  Account mutations namespace
+  """
+  type AccountMutations {
     """
     Creates new account
     """
-    createAccount(
+    create(
       input: AccountInput!
-    ): Account
+    ): CreateAccountResponse
+  }
+
+  extend type Mutation {
+    """
+    We divide different mutations with namespaces so account is a namespace that contains only mutations
+    related to the accouts
+    """
+    account: AccountMutations
   }
 `;

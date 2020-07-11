@@ -29,6 +29,6 @@ export default gql`
     """
     Last operations with account (deposits, purchases or others)
     """
-    history: [Operation]
+    history: [Operation!]
   }
 `;

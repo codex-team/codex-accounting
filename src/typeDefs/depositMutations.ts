@@ -16,12 +16,22 @@ export default gql`
     amount: NonNegativeInt!
   }
 
+  """
+  Special type for deposit response
+  """
+  type DepositResponse {
+    """
+    Deposit transaction identifier
+    """
+    transactionID: ID!
+  }
+
   extend type Mutation {
     """
     Deposit operation. Increases account balance and cashbook
     """
     deposit(
       input: DepositInput!
-    ): Int
+    ): DepositResponse
   }
 `;
