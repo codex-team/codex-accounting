@@ -23,7 +23,7 @@ export default gql`
     """
     Deposit transaction identifier
     """
-    transactionID: ID!
+    transactionId: ID!
   }
 
   extend type Mutation {
@@ -32,6 +32,6 @@ export default gql`
     """
     deposit(
       input: DepositInput!
-    ): DepositResponse
+    ): DepositResponse!
   }
 `;

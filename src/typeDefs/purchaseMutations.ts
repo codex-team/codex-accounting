@@ -23,7 +23,7 @@ export default gql`
     """
     Purchase transaction identifier
     """
-    transactionID: ID!
+    transactionId: ID!
   }
 
   extend type Mutation {
@@ -32,6 +32,6 @@ export default gql`
     """
     purchase(
       input: PurchaseInput!
-    ): PurchaseResponse
+    ): PurchaseResponse!
   }
 `;

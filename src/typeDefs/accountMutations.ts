@@ -29,7 +29,7 @@ export default gql`
     """
     New created account identifier
     """
-    id: ID!
+    accountId: ID!
   }
 
   """
@@ -41,14 +41,14 @@ export default gql`
     """
     create(
       input: AccountInput!
-    ): CreateAccountResponse
+    ): CreateAccountResponse!
   }
 
   extend type Mutation {
     """
     We divide different mutations with namespaces so account is a namespace that contains only mutations
-    related to the accouts
+    related to the accounts
     """
-    account: AccountMutations
+    account: AccountMutations!
   }
 `;

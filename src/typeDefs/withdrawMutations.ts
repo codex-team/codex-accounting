@@ -32,6 +32,6 @@ export default gql`
     """
     withdraw(
       input: WithdrawInput!
-    ): WithdrawResponse
+    ): WithdrawResponse!
   }
 `;
