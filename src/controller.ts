@@ -1,19 +1,24 @@
 import { connect, Db, MongoClient } from 'mongodb';
-import { DatabaseConnectionError } from './errors';
+import { DatabaseError } from './errors';
 
 /**
  * Database connection singleton
  */
 export class DatabaseController {
   /**
+   * Instance of DatabaseController
+   */
+  private static instance?: DatabaseController;
+
+  /**
    * MongoDB client
    */
-  private db: Db | undefined;
+  private db?: Db;
 
   /**
    * Mongo connection
    */
-  private connection: MongoClient | undefined;
+  private connection?: MongoClient;
 
   /**
    * MongoDB connection URI
@@ -27,9 +32,23 @@ export class DatabaseController {
    */
   constructor(connectionUri: string) {
     if (!connectionUri) {
-      throw new DatabaseConnectionError('Connection URI is not specified. Check .env');
+      throw new DatabaseError('Connection URI is not specified. Check .env');
     }
     this.connectionUri = connectionUri;
+    DatabaseController.instance = this;
+  }
+
+  /**
+   * Return DatabaseController instance if it was created
+   *
+   * @throws {DatabaseError} if instance wasn't created
+   */
+  public static getInstance(): DatabaseController {
+    if (DatabaseController.instance == undefined) {
+      throw new DatabaseError('DatabaseController was not created');
+    }
+
+    return DatabaseController.instance;
   }
 
   /**
@@ -49,7 +68,7 @@ export class DatabaseController {
 
       return this.db;
     } catch (err) {
-      throw new DatabaseConnectionError(err);
+      throw new DatabaseError(err);
     }
   }
 
@@ -69,9 +88,15 @@ export class DatabaseController {
   }
 
   /**
-   * @returns {Db|undefined}
+   * Return MongoDB client
+   *
+   * @throws {DatabaseError} if the MongoDB client wasn't created by the `connect` method
    */
-  public getConnection(): Db | undefined {
+  public getConnection(): Db {
+    if (this.db == undefined) {
+      throw new DatabaseError('You need to call the `connect` method before call `getConnection`');
+    }
+
     return this.db;
   }
 }

@@ -16,5 +16,3 @@ services:
       - mongodb
   mongodb:
     image: mongo:4.2
-    env_file:
-      - .env

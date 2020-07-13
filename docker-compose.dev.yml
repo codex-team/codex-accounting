@@ -20,8 +20,6 @@ services:
     image: mongo:4.2
     volumes:
       - mongodata:/data/db
-    env_file:
-      - .env
     ports:
       - 27017:27017
 

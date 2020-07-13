@@ -12,7 +12,7 @@ describe('Database Controller Test', () => {
   }
   const db = new DatabaseController(process.env.MONGO_ACCOUNTING_DATABASE_URI);
 
-  describe('event', () => {
+  describe('DatabaseController', () => {
     beforeAll(async () => {
       await db.connect();
     });

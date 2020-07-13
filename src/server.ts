@@ -7,6 +7,7 @@ import { GraphQLError } from 'graphql';
 import HawkCatcher from '@hawk.so/nodejs';
 import { NonCriticalError } from './errors';
 import { express as voyagerMiddleware } from 'graphql-voyager/middleware';
+import { DatabaseController } from './controller';
 
 /**
  * Hawk API server
@@ -43,12 +44,18 @@ class AccountantServer {
    *
    * @param serverPort - port to listen for requests
    * @param enablePlayground - is playground enable on GET /graphql route
+   * @param dbUri - database URI for connection
    */
-  constructor(serverPort: number, enablePlayground: boolean) {
+  constructor(serverPort: number, enablePlayground: boolean, dbUri: string) {
     this.serverPort = serverPort;
     this.enablePlayground = enablePlayground;
     this.app.use(express.json());
     this.app.use('/voyager', voyagerMiddleware({ endpointUrl: '/graphql' }));
+
+    // eslint-disable-next-line no-new
+    new DatabaseController(dbUri);
+
+    // @todo create repositories
 
     this.server = new ApolloServer({
       typeDefs,

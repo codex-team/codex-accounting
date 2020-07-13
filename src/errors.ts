@@ -10,5 +10,5 @@ export class NonCriticalError extends ApolloError {
 /**
  * Class for critical database connection errors
  */
-export class DatabaseConnectionError extends Error {
+export class DatabaseError extends Error {
 }
