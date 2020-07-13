@@ -27,7 +27,7 @@ export default gql`
   """
   type Transaction {
     """
-    Transaction unique identifer
+    Transaction unique identifier
     """
     id: ID!
 
