@@ -29,7 +29,12 @@ export default gql`
     """
     New created account identifier
     """
-    accountId: ID!
+    recordId: ID!
+
+    """
+    Created account payload
+    """
+    record: Account!
   }
 
   """

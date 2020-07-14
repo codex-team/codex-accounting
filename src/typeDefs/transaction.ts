@@ -46,11 +46,5 @@ export default gql`
     When the transaction did appeared
     """
     dtCreated: DateTime!
-
-    """
-    List of debit and credit records.
-    The sum of theirs amounts must be equals ZERO
-    """
-    entries: [Entry]!
   }
 `;

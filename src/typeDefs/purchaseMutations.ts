@@ -23,7 +23,12 @@ export default gql`
     """
     Purchase transaction identifier
     """
-    transactionId: ID!
+    recordId: ID!
+
+    """
+    Purchase transaction payload
+    """
+    record: Transaction!
   }
 
   extend type Mutation {

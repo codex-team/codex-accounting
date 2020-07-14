@@ -23,7 +23,12 @@ export default gql`
     """
     Withdraw transaction identifier
     """
-    transactionID: ID!
+    recordId: ID!
+
+    """
+    Withdraw transaction payload
+    """
+    record: Transaction!
   }
 
   extend type Mutation {

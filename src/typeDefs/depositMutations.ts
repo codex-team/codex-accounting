@@ -23,7 +23,12 @@ export default gql`
     """
     Deposit transaction identifier
     """
-    transactionId: ID!
+    recordId: ID!
+
+    """
+    Deposit transaction payload
+    """
+    record: Transaction!
   }
 
   extend type Mutation {

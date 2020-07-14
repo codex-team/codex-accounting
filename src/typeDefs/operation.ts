@@ -20,7 +20,7 @@ export default gql`
     """
     Transaction identifier
     """
-    transactionID: String!
+    transactionId: String!
 
     """
     Increase or decrease operation
@@ -38,7 +38,7 @@ export default gql`
     dtCreated: DateTime!
 
     """
-    Positive value of the record in minumal currency value (cents)
+    Positive value of the record in minimal currency value (cents)
     """
     amount: NonNegativeInt!
   }
