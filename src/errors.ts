@@ -12,3 +12,9 @@ export class NonCriticalError extends ApolloError {
  */
 export class DatabaseError extends Error {
 }
+
+/**
+ * Class for critical server errors
+ */
+export class AccountingServerError extends Error {
+}
