@@ -21,14 +21,13 @@ export default gql`
     Purchase
   }
 
-
   """
   Represents a single money transfer operation.
   MUST contain debit and credit entries with the balanced (=0) total amount
   """
   type Transaction {
     """
-    Transaction unique identifer
+    Transaction unique identifier
     """
     id: ID!
 
@@ -47,11 +46,5 @@ export default gql`
     When the transaction did appeared
     """
     dtCreated: DateTime!
-
-    """
-    List of debit and credit records.
-    The sum of theirs amounts must be equals ZERO
-    """
-    entries: [Entry]!
   }
 `;
