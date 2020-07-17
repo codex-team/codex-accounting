@@ -8,8 +8,8 @@ import HawkCatcher from '@hawk.so/nodejs';
 import { AccountingServerError, NonCriticalError } from './errors';
 import { express as voyagerMiddleware } from 'graphql-voyager/middleware';
 import { DatabaseController } from './controller';
-import TransactionRepository from "./repositories/implementations/transactionRepository";
-import AccountRepository from "./repositories/implementations/accountRepository";
+import TransactionRepository from './repositories/implementations/transactionRepository';
+import AccountRepository from './repositories/implementations/accountRepository';
 
 /**
  * Hawk API server
