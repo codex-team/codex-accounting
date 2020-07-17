@@ -2,7 +2,7 @@ module.exports = {
   mongodbMemoryServerOptions: {
     instance: {
       port: 55010,
-      dbName: 'hawk',
+      dbName: 'codex_accounting',
     },
     binary: {
       version: '4.0.3',
