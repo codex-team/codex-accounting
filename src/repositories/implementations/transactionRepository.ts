@@ -9,6 +9,7 @@ export default class TransactionRepository implements ITransactionRepository {
   /**
    * MongoDB client
    */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars-experimental
   private db: Db;
 
   /**
