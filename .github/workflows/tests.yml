@@ -9,8 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Install mongodb
-        run: sudo apt install -y mongodb
       - name: Install modules
         run: yarn
       - name: Run tests
