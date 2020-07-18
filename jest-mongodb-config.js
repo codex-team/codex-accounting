@@ -1,8 +1,8 @@
 module.exports = {
   mongodbMemoryServerOptions: {
     instance: {
-      port: 55011,
-      dbName: 'codex-accounting',
+      port: 55010,
+      dbName: 'codex_accounting',
     },
     binary: {
       version: '4.0.3',

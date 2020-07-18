@@ -6,6 +6,11 @@ import { DatabaseError } from './errors';
  */
 export class DatabaseController {
   /**
+   * Instance of DatabaseController
+   */
+  private static instance?: DatabaseController;
+
+  /**
    * MongoDB client
    */
   private db?: Db;
@@ -30,6 +35,20 @@ export class DatabaseController {
       throw new DatabaseError('Connection URI is not specified. Check .env');
     }
     this.connectionUri = connectionUri;
+    DatabaseController.instance = this;
+  }
+
+  /**
+   * Return DatabaseController instance if it was created
+   *
+   * @throws {DatabaseError} if instance wasn't created
+   */
+  public static getInstance(): DatabaseController {
+    if (DatabaseController.instance == undefined) {
+      throw new DatabaseError('DatabaseController was not created');
+    }
+
+    return DatabaseController.instance;
   }
 
   /**
@@ -45,7 +64,7 @@ export class DatabaseController {
         useNewUrlParser: true,
         useUnifiedTopology: true,
       });
-      this.db = this.connection.db();
+      this.db = await this.connection.db();
 
       return this.db;
     } catch (err) {
