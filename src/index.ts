@@ -24,10 +24,6 @@ const server = new AccountantServer(
   process.env.MONGO_ACCOUNTING_DATABASE_URI
 );
 
-if (process.env.HAWK_CATCHER_TOKEN) {
-  HawkCatcher.init(process.env.HAWK_CATCHER_TOKEN);
-}
-
 server.start().catch(err => {
   HawkCatcher.send(err);
   console.log('Server runtime error' + err);
