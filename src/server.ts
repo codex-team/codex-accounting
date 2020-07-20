@@ -10,6 +10,7 @@ import { express as voyagerMiddleware } from 'graphql-voyager/middleware';
 import { DatabaseController } from './controller';
 import TransactionRepository from './repositories/implementations/transactionRepository';
 import AccountRepository from './repositories/implementations/accountRepository';
+import {ResolverContextBase} from "./types/graphql";
 
 /**
  * Hawk API server
@@ -18,7 +19,7 @@ class AccountantServer {
   /**
    * Object with repository instances
    */
-  private context?: object;
+  private context?: ResolverContextBase;
 
   /**
    * Port to listen for requests
@@ -82,6 +83,7 @@ class AccountantServer {
 
         return error;
       },
+      context: (): ResolverContextBase => this.createContext()
     });
 
     this.server.applyMiddleware({ app: this.app });
@@ -130,7 +132,7 @@ class AccountantServer {
    *
    * @throws {AccountingServerError} if the server instance wasn't started by the `start` method
    */
-  private createContext(): object {
+  private createContext(): ResolverContextBase {
     // @todo impl and use context wrapper class
     if (this.dbController == undefined) {
       throw new AccountingServerError('You need to call the `start` method before call `createContext`');

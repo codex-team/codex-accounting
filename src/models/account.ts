@@ -63,12 +63,12 @@ export interface AccountData {
   /**
    * Account debit amount
    */
-  drAmount: number;
+  drAmount?: number;
 
   /**
    * Account credit amount
    */
-  crAmount: number;
+  crAmount?: number;
 }
 
 /**
@@ -113,13 +113,15 @@ export class Account extends BaseModel {
 
     if (!data.id) {
       this.id = '123321';
+    } else {
+      this.id = data.id;
     }
 
     this.name = data.name;
     this.type = data.type;
     this.currency = data.currency;
-    this.drAmount = data.drAmount;
-    this.crAmount = data.crAmount;
+    this.drAmount = data.drAmount || 0;
+    this.crAmount = data.crAmount || 0;
   }
 
   /**

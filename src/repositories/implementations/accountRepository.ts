@@ -39,4 +39,20 @@ export default class AccountRepository implements IAccountRepository {
       crAmount: 400,
     });
   }
+
+  /**
+   * Persists new account
+   *
+   * @param name
+   * @param type
+   * @param currency
+   */
+  public create(name: string, type: AccountType, currency: Currency): Account {
+    return new Account({
+      id: 'sjdflskmdflksmdflkm',
+      name: name,
+      type: type,
+      currency: currency
+    })
+  }
 }
