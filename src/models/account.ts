@@ -1,5 +1,7 @@
 import { BaseModel } from './baseModel';
 import { Currency } from '../types/currency';
+import { v4 as uuidv4} from 'uuid';
+import DateTimeFormat = Intl.DateTimeFormat;
 
 /**
  * List of available account types
@@ -43,7 +45,7 @@ export interface AccountData {
   /**
    * Account unique identifier
    */
-  id: string;
+  id?: string;
 
   /**
    * Account name. Used to point the purpose
@@ -59,6 +61,11 @@ export interface AccountData {
    * Account currency
    */
   currency: Currency;
+
+  /**
+   * Account creation date
+   */
+  dtCreated: Date;
 
   /**
    * Account debit amount
@@ -96,6 +103,11 @@ export class Account extends BaseModel {
   public readonly currency: Currency = Currency.USD;
 
   /**
+   * Account creation time
+   */
+  public readonly dtCreated: number | undefined;
+
+  /**
    * Debit amount
    */
   public readonly drAmount: number = 0;
@@ -111,10 +123,15 @@ export class Account extends BaseModel {
   constructor(data: AccountData) {
     super();
 
-    if (!data.id) {
-      this.id = '123321';
-    } else {
+    let isNew = false;
+    if (data.id) {
+      isNew = true;
       this.id = data.id;
+    }
+
+    if (isNew) {
+      this.id = uuidv4();
+      this.dtCreated = Date.now();
     }
 
     this.name = data.name;

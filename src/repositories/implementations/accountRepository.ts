@@ -1,7 +1,7 @@
-import { Account, AccountType } from '../../models/account';
+import {Account, AccountData, AccountType} from '../../models/account';
 import { IAccountRepository } from '../interfaces/accountRepository';
 import { Currency } from '../../types/currency';
-import { Db } from 'mongodb';
+import {Collection, Db} from 'mongodb';
 
 /**
  * This class is concrete implementation of IAccountRepository that uses MongoDB as a storage
@@ -13,12 +13,18 @@ export default class AccountRepository implements IAccountRepository {
   private db: Db;
 
   /**
+   * Accounts persistent storage collection
+   */
+  private collection: Collection;
+
+  /**
    * Creates account repository instance
    *
    * @param db - MongoDB client
    */
   constructor(db: Db) {
     this.db = db;
+    this.collection = this.db.collection('accounts');
   }
 
   /**
@@ -26,18 +32,16 @@ export default class AccountRepository implements IAccountRepository {
    *
    * @param id - account identifier
    */
-  public getAccount(id: string): Account {
-    // @todo Here we fetch MongoDB to get account data and dr/cr amount
-    // const account = await this.db.collection('account').findOne({ id: id });
-
-    return new Account({
-      id: id,
-      name: 'Workspace account',
-      type: AccountType.Liability,
-      currency: Currency.USD,
-      drAmount: 200,
-      crAmount: 400,
+  public async getAccount(id: string): Promise<Account|null> {
+    const data = await this.collection.findOne({
+      id: id
     });
+
+    if (!data) {
+      return null;
+    }
+
+    return new Account(data);
   }
 
   /**
@@ -47,12 +51,19 @@ export default class AccountRepository implements IAccountRepository {
    * @param type
    * @param currency
    */
-  public create(name: string, type: AccountType, currency: Currency): Account {
-    return new Account({
-      id: 'sjdflskmdflksmdflkm',
+  public async create(name: string, type: AccountType, currency: Currency): Promise<Account> {
+    const data = {
       name: name,
       type: type,
       currency: currency
-    })
+    } as AccountData;
+
+    const account = new Account(data)
+    await this.collection.insertOne({
+      id: account.id,
+      ...data
+    });
+
+    return account;
   }
 }
