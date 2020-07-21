@@ -1,10 +1,26 @@
 import Transaction from '../../models/transaction';
 import { ITransactionRepository } from '../interfaces/transactionRepository';
+import { Db } from 'mongodb';
 
 /**
  * Concrete ITransactionRepository implementation. Uses MongoDB
  */
 export default class TransactionRepository implements ITransactionRepository {
+  /**
+   * MongoDB client
+   */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars-experimental
+  private db: Db;
+
+  /**
+   * Creates account transaction instance
+   *
+   * @param db - MongoDB client
+   */
+  constructor(db: Db) {
+    this.db = db;
+  }
+
   /**
    * This method used to validate and store the transaction
    * The transaction passed once or not balanced cannot be committed
@@ -27,7 +43,7 @@ export default class TransactionRepository implements ITransactionRepository {
     //   dtCreated: transaction.dtCreated,
     //   entries: transaction.entries,
     // } as TransactionData;
-
+    // await this.db.collection('transaction').insertOne(data);
     // @todo Store to the MongoDB
 
     /** lock transaction */

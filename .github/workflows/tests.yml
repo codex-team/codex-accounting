@@ -14,4 +14,3 @@ jobs:
       - name: Run tests
         run: yarn test
       - uses: codecov/codecov-action@v1
-

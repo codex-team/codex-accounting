@@ -14,8 +14,15 @@ if (!process.env.PORT) {
   console.error('Please, specify server port via .env PORT option');
   process.exit(1);
 }
-
-const server = new AccountantServer(+process.env.PORT, process.env.PLAYGROUND_ENABLE === 'true');
+if (!process.env.MONGO_ACCOUNTING_DATABASE_URI) {
+  console.error('Please, specify mongodb uri via .env MONGO_ACCOUNTING_DATABASE_URI option');
+  process.exit(1);
+}
+const server = new AccountantServer(
+  +process.env.PORT,
+  process.env.PLAYGROUND_ENABLE === 'true',
+  process.env.MONGO_ACCOUNTING_DATABASE_URI
+);
 
 server.start().catch(err => {
   HawkCatcher.send(err);
