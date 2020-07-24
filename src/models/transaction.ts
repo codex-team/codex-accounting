@@ -1,5 +1,6 @@
 import { Entry, EntryType } from './entry';
 import { Account } from './account';
+import {v4 as uuidv4} from "uuid";
 
 /**
  * Available transaction types
@@ -28,27 +29,27 @@ export interface TransactionData {
   /**
    * Transaction unique identifier (UUIDv4)
    */
-  id: string;
+  id?: string;
 
   /**
    * One of the transaction type described above
    */
-  type: TransactionType;
+  type?: TransactionType;
 
   /**
    * Short transaction purpose
    */
-  description: string;
+  description?: string;
 
   /**
    * Transaction creation datetime
    */
-  dtCreated: number;
+  dtCreated?: number;
 
   /**
    * Transaction entries
    */
-  entries: Entry[];
+  entries?: Entry[];
 }
 
 /**
@@ -63,12 +64,12 @@ export default class Transaction {
   /**
    * One of listed transaction types
    */
-  public readonly type: TransactionType;
+  public readonly type: TransactionType = TransactionType.Deposit;
 
   /**
    * Creation date as unixtime
    */
-  public readonly dtCreated: number;
+  public readonly dtCreated: number = 1111;
 
   /**
    * Transaction entries
@@ -89,17 +90,18 @@ export default class Transaction {
    * @param data - transaction payload
    */
   constructor(data: TransactionData) {
-    if (data.id.trim() === '') {
-      this.id = 'generated UUIDv4';
-    } else {
-      this.id = data.id;
-      this.posted = true;
-    }
-
-    this.type = data.type;
-    this.dtCreated = data.dtCreated;
-    this.description = data.description;
-    this.entries = data.entries;
+    this.id = uuidv4();
+    // if (data.id && data.id.trim() === '') {
+    //   this.id = 'generated UUIDv4';
+    // } else {
+    //   this.id = data.id;
+    //   this.posted = true;
+    // }
+    //
+    // this.type = data.type;
+    // this.dtCreated = data.dtCreated;
+    // this.description = data.description;
+    // this.entries = data.entries;
   }
 
   /**

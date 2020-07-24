@@ -1,7 +1,6 @@
 import { BaseModel } from './baseModel';
 import { Currency } from '../types/currency';
 import { v4 as uuidv4 } from 'uuid';
-import DateTimeFormat = Intl.DateTimeFormat;
 
 /**
  * List of available account types
@@ -123,10 +122,10 @@ export class Account extends BaseModel {
   constructor(data: AccountData) {
     super();
 
-    let isNew = false;
+    let isNew = true;
 
     if (data.id) {
-      isNew = true;
+      isNew = false;
       this.id = data.id;
     }
 

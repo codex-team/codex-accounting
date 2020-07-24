@@ -2,6 +2,7 @@ import { Account, AccountData, AccountType } from '../../models/account';
 import { IAccountRepository } from '../interfaces/accountRepository';
 import { Currency } from '../../types/currency';
 import { Collection, Db } from 'mongodb';
+import {Entry} from "../../models/entry";
 
 /**
  * This class is concrete implementation of IAccountRepository that uses MongoDB as a storage
@@ -40,6 +41,27 @@ export default class AccountRepository implements IAccountRepository {
     if (!data) {
       return null;
     }
+
+    const accountTransactions = await this.db.collection('transactions').find({"entries.accountId": data.id}).toArray();
+
+    let drAmount = 0;
+    let crAmount = 0;
+
+    for(let i = 0; i < accountTransactions.length; i++) {
+      const transaction = accountTransactions[i];
+      const entries = transaction['entries'];
+
+      entries.every( (entry: Entry) => {
+        if (entry.accountId === data.id && entry.type === 0) {
+          drAmount += entry.amount;
+        } else if (entry.accountId === data.id && entry.type === 1) {
+          crAmount += entry.amount;
+        }
+      })
+    }
+
+    data.drAmount = drAmount;
+    data.crAmount = crAmount;
 
     return new Account(data);
   }
