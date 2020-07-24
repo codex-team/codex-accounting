@@ -10,7 +10,7 @@ import { express as voyagerMiddleware } from 'graphql-voyager/middleware';
 import { DatabaseController } from './controller';
 import TransactionRepository from './repositories/implementations/transactionRepository';
 import AccountRepository from './repositories/implementations/accountRepository';
-import {ResolverContextBase} from "./types/graphql";
+import { ResolverContextBase } from './types/graphql';
 
 /**
  * Hawk API server
@@ -83,7 +83,7 @@ class AccountantServer {
 
         return error;
       },
-      context: (): ResolverContextBase => this.createContext()
+      context: (): ResolverContextBase => this.createContext(),
     });
 
     this.server.applyMiddleware({ app: this.app });

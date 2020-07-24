@@ -1,7 +1,7 @@
-import {Account, AccountData, AccountType} from '../../models/account';
+import { Account, AccountData, AccountType } from '../../models/account';
 import { IAccountRepository } from '../interfaces/accountRepository';
 import { Currency } from '../../types/currency';
-import {Collection, Db} from 'mongodb';
+import { Collection, Db } from 'mongodb';
 
 /**
  * This class is concrete implementation of IAccountRepository that uses MongoDB as a storage
@@ -34,7 +34,7 @@ export default class AccountRepository implements IAccountRepository {
    */
   public async getAccount(id: string): Promise<Account|null> {
     const data = await this.collection.findOne({
-      id: id
+      id: id,
     });
 
     if (!data) {
@@ -55,13 +55,14 @@ export default class AccountRepository implements IAccountRepository {
     const data = {
       name: name,
       type: type,
-      currency: currency
+      currency: currency,
     } as AccountData;
 
-    const account = new Account(data)
+    const account = new Account(data);
+
     await this.collection.insertOne({
       id: account.id,
-      ...data
+      ...data,
     });
 
     return account;

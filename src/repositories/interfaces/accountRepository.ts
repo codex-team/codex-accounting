@@ -1,5 +1,5 @@
-import {Account, AccountType} from '../../models/account';
-import {Currency} from "../../types/currency";
+import { Account, AccountType } from '../../models/account';
+import { Currency } from '../../types/currency';
 
 /**
  * AccountRepository interface

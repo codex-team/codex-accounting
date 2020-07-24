@@ -1,6 +1,6 @@
 import { BaseModel } from './baseModel';
 import { Currency } from '../types/currency';
-import { v4 as uuidv4} from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 import DateTimeFormat = Intl.DateTimeFormat;
 
 /**
@@ -124,6 +124,7 @@ export class Account extends BaseModel {
     super();
 
     let isNew = false;
+
     if (data.id) {
       isNew = true;
       this.id = data.id;

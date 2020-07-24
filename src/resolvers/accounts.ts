@@ -1,4 +1,4 @@
-import {ResolverContextBase} from "../types/graphql";
+import { ResolverContextBase } from '../types/graphql';
 
 const AccountMutations = {
   async create(
@@ -11,10 +11,10 @@ const AccountMutations = {
 
     return {
       recordId: newAccount.id,
-      record: newAccount
-    }
-  }
-}
+      record: newAccount,
+    };
+  },
+};
 
 const Query = {
   async getAccount(
@@ -23,16 +23,17 @@ const Query = {
     { repositories }: ResolverContextBase
   ) {
     const accountRepository = repositories.account;
+
     return accountRepository.getAccount(id);
-  }
-}
+  },
+};
 
 const Mutation = {
-  account: (): Record<string, undefined> => ({})
-}
+  account: (): Record<string, undefined> => ({}),
+};
 
 export default {
   Mutation,
   Query,
-  AccountMutations
-}
+  AccountMutations,
+};
