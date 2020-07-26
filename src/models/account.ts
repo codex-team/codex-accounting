@@ -1,7 +1,6 @@
 import { BaseModel } from './baseModel';
 import { Currency } from '../types/currency';
 import { v4 as uuidv4 } from 'uuid';
-import DateTimeFormat = Intl.DateTimeFormat;
 
 /**
  * List of available account types
@@ -65,7 +64,7 @@ export interface AccountData {
   /**
    * Account creation date
    */
-  dtCreated: Date;
+  dtCreated: number;
 
   /**
    * Account debit amount
@@ -105,7 +104,7 @@ export class Account extends BaseModel {
   /**
    * Account creation time
    */
-  public readonly dtCreated: number | undefined;
+  public readonly dtCreated: number = 0;
 
   /**
    * Debit amount

@@ -47,9 +47,9 @@ export default class AccountRepository implements IAccountRepository {
   /**
    * Persists new account
    *
-   * @param name
-   * @param type
-   * @param currency
+   * @param name - account name
+   * @param type - account type
+   * @param currency - account currency
    */
   public async create(name: string, type: AccountType, currency: Currency): Promise<Account> {
     const data = {
