@@ -16,7 +16,12 @@ export default class AccountRepository implements IAccountRepository {
   /**
    * Accounts persistent storage collection
    */
-  private collection: Collection;
+  private accountsCollection: Collection;
+
+  /**
+   * Transaction collection pointer
+   */
+  private transactionsCollection: Collection;
 
   /**
    * Creates account repository instance
@@ -25,7 +30,8 @@ export default class AccountRepository implements IAccountRepository {
    */
   constructor(db: Db) {
     this.db = db;
-    this.collection = this.db.collection('accounts');
+    this.accountsCollection = this.db.collection('accounts');
+    this.transactionsCollection = this.db.collection('transactions');
   }
 
   /**
@@ -34,34 +40,13 @@ export default class AccountRepository implements IAccountRepository {
    * @param id - account identifier
    */
   public async getAccount(id: string): Promise<Account|null> {
-    const data = await this.collection.findOne({
+    const data = await this.accountsCollection.findOne({
       id: id,
     });
 
     if (!data) {
       return null;
     }
-
-    const accountTransactions = await this.db.collection('transactions').find({"entries.accountId": data.id}).toArray();
-
-    let drAmount = 0;
-    let crAmount = 0;
-
-    for(let i = 0; i < accountTransactions.length; i++) {
-      const transaction = accountTransactions[i];
-      const entries = transaction['entries'];
-
-      entries.every( (entry: Entry) => {
-        if (entry.accountId === data.id && entry.type === 0) {
-          drAmount += entry.amount;
-        } else if (entry.accountId === data.id && entry.type === 1) {
-          crAmount += entry.amount;
-        }
-      })
-    }
-
-    data.drAmount = drAmount;
-    data.crAmount = crAmount;
 
     return new Account(data);
   }
@@ -82,11 +67,35 @@ export default class AccountRepository implements IAccountRepository {
 
     const account = new Account(data);
 
-    await this.collection.insertOne({
+    await this.accountsCollection.insertOne({
       id: account.id,
       ...data,
     });
 
     return account;
+  }
+
+  private async getDebitAndCreditAmounts(account: Account): any {
+    const accountTransactions = await this.transactionsCollection.find({
+      "entries.accountId": account.id
+    }).toArray();
+
+    let amount = 0;
+    for(let i = 0; i < accountTransactions.length; i++) {
+      const transaction = accountTransactions[i];
+      const entries = transaction['entries'];
+
+      entries.every( (entry: Entry) => {
+        if (entry.accountId === account.id && entry.type === 0) {
+          amount += entry.amount;
+        }
+      });
+    }
+
+    return amount;
+  }
+
+  private getCreditAmount(account: Account) {
+
   }
 }
