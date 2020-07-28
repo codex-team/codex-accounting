@@ -60,6 +60,11 @@ export interface AccountConstructorData {
    * Account currency
    */
   currency: Currency;
+
+  /**
+   * Account creation time
+   */
+  dtCreated: number;
 }
 
 /**
@@ -99,9 +104,10 @@ export class Account extends BaseModel {
 
     if (!data.id) {
       this.id = uuidv4();
-      this.dtCreated = Date.now()
+      this.dtCreated = Date.now();
     } else {
       this.id = data.id;
+      this.dtCreated = data.dtCreated;
     }
 
     this.name = data.name;

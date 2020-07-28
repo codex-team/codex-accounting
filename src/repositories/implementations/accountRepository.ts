@@ -65,7 +65,7 @@ export default class AccountRepository implements IAccountRepository {
       name: account.name,
       type: account.type,
       currency: account.currency,
-      dtCreated: account.dtCreated
+      dtCreated: account.dtCreated,
     });
 
     return account;
