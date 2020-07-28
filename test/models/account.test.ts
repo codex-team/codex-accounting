@@ -16,6 +16,7 @@ describe('Account model test', () => {
     const account = new Account(data);
 
     expect(account.id).not.toBe(undefined);
+    expect(account.id).toMatch(/[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}/);
     expect(account.name).toEqual(data.name);
     expect(account.type).toEqual(data.type);
     expect(account.currency).toEqual(data.currency);
@@ -23,6 +24,7 @@ describe('Account model test', () => {
 
   it('Constructing an Account model. ID should not be generated', async () => {
     const data = {
+      id: 'Account identifier',
       name: 'Test account',
       type: AccountType.Asset,
       currency: Currency.USD
@@ -30,7 +32,7 @@ describe('Account model test', () => {
 
     const account = new Account(data);
 
-    expect(account.id).toMatch(/[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}/);
+    expect(account.id).toEqual(data.id);
     expect(account.name).toEqual(data.name);
     expect(account.type).toEqual(data.type);
     expect(account.currency).toEqual(data.currency);
