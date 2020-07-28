@@ -9,22 +9,22 @@ export enum AccountType {
   /**
    * Credit account that represents debts before customers
    */
-  Liability,
+  Liability = 'Liability',
 
   /**
    * Debit account, used as a cashbook
    */
-  Asset,
+  Asset = 'Asset',
 
   /**
    * Credit account that represents company incomes
    */
-  Revenue,
+  Revenue = 'Revenue',
 
   /**
    * Debit account that represents company outcomes
    */
-  Expense
+  Expense = 'Expense'
 }
 
 /**
@@ -40,7 +40,7 @@ const creditAccounts = [AccountType.Liability, AccountType.Revenue];
 /**
  * Payload that used to initialize Account model
  */
-export interface AccountData {
+export interface AccountConstructorData {
   /**
    * Account unique identifier
    */
@@ -60,21 +60,6 @@ export interface AccountData {
    * Account currency
    */
   currency: Currency;
-
-  /**
-   * Account creation date
-   */
-  dtCreated: number;
-
-  /**
-   * Account debit amount
-   */
-  drAmount?: number;
-
-  /**
-   * Account credit amount
-   */
-  crAmount?: number;
 }
 
 /**
@@ -107,66 +92,34 @@ export class Account extends BaseModel {
   public readonly dtCreated: number = 0;
 
   /**
-   * Debit amount
-   */
-  public readonly drAmount: number = 0;
-
-  /**
-   * Credit amount;
-   */
-  public readonly crAmount: number = 0;
-
-  /**
    * @param data - account payload
    */
-  constructor(data: AccountData) {
+  constructor(data: AccountConstructorData) {
     super();
 
-    let isNew = false;
-
-    if (data.id) {
-      isNew = true;
-      this.id = data.id;
-    }
-
-    if (isNew) {
+    if (!data.id) {
       this.id = uuidv4();
-      this.dtCreated = Date.now();
+      this.dtCreated = Date.now()
+    } else {
+      this.id = data.id;
     }
 
     this.name = data.name;
     this.type = data.type;
     this.currency = data.currency;
-    this.drAmount = data.drAmount || 0;
-    this.crAmount = data.crAmount || 0;
-  }
-
-  /**
-   * Returns current account balance
-   */
-  public get balance(): number {
-    if (this.isDebitAccount()) {
-      return this.drAmount - this.crAmount;
-    }
-
-    if (this.isCreditAccount()) {
-      return this.crAmount - this.drAmount;
-    }
-
-    throw new Error('Account type is not defined or is not correct');
   }
 
   /**
    * Returns true if it is debit account
    */
-  private isDebitAccount(): boolean {
+  public isDebitAccount(): boolean {
     return debitAccounts.indexOf(this.type) !== -1;
   }
 
   /**
    * Returns true if it is credit account
    */
-  private isCreditAccount(): boolean {
+  public isCreditAccount(): boolean {
     return creditAccounts.indexOf(this.type) !== -1;
   }
 }

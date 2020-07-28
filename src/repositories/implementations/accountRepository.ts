@@ -1,4 +1,4 @@
-import { Account, AccountData, AccountType } from '../../models/account';
+import { Account, AccountConstructorData, AccountType } from '../../models/account';
 import { IAccountRepository } from '../interfaces/accountRepository';
 import { Currency } from '../../types/currency';
 import { Collection, Db } from 'mongodb';
@@ -28,7 +28,7 @@ export default class AccountRepository implements IAccountRepository {
   }
 
   /**
-   * Fetches MongoDB to get AccountData and returns Account Model
+   * Fetches MongoDB to get AccountConstructorData and returns Account Model
    *
    * @param id - account identifier
    */
@@ -56,13 +56,16 @@ export default class AccountRepository implements IAccountRepository {
       name: name,
       type: type,
       currency: currency,
-    } as AccountData;
+    } as AccountConstructorData;
 
     const account = new Account(data);
 
     await this.collection.insertOne({
       id: account.id,
-      ...data,
+      name: account.name,
+      type: account.type,
+      currency: account.currency,
+      dtCreated: account.dtCreated
     });
 
     return account;
