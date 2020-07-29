@@ -1,16 +1,17 @@
 import '../../src/env-test';
-import {Account, AccountConstructorData, AccountType} from "../../src/models/account";
-import {Currency} from "../../src/types/currency";
+import { Account, AccountConstructorData, AccountType } from '../../src/models/account';
+import { Currency } from '../../src/types/currency';
 
 /**
  * Tests for Account model
  */
-describe('Account model test', () => {
-  it('New account identifier generation. ID should be generated', async () => {
+describe('Account model', () => {
+  it('Should generate UUID identifier', async () => {
     const data = {
       name: 'Test account',
       type: AccountType.Asset,
-      currency: Currency.USD
+      currency: Currency.USD,
+      dtCreated: Date.now(),
     } as AccountConstructorData;
 
     const account = new Account(data);
@@ -20,14 +21,15 @@ describe('Account model test', () => {
     expect(account.name).toEqual(data.name);
     expect(account.type).toEqual(data.type);
     expect(account.currency).toEqual(data.currency);
+    expect(account.dtCreated).toEqual(data.dtCreated);
   });
 
-  it('Constructing an Account model. ID should not be generated', async () => {
+  it('Should not generate UUID, but use passed one', async () => {
     const data = {
       id: 'Account identifier',
       name: 'Test account',
       type: AccountType.Asset,
-      currency: Currency.USD
+      currency: Currency.USD,
     } as AccountConstructorData;
 
     const account = new Account(data);
@@ -37,4 +39,4 @@ describe('Account model test', () => {
     expect(account.type).toEqual(data.type);
     expect(account.currency).toEqual(data.currency);
   });
-})
+});

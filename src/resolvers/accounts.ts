@@ -5,7 +5,7 @@ import { Currency } from '../types/currency';
 /**
  * Concrete create mutation input declaration
  */
-interface CreateMutationInput {
+interface CreateAccountMutationInput {
   /**
    * Creating account input
    */
@@ -26,7 +26,7 @@ interface CreateMutationInput {
  * Mutation input declaration
  */
 interface CreateMutationParams {
-  input: CreateMutationInput;
+  input: CreateAccountMutationInput;
 }
 
 /**
@@ -74,7 +74,7 @@ const Query = {
   ): Promise<Account|null> {
     const accountRepository = repositories.account;
 
-    return accountRepository.getAccount(id);
+    return accountRepository.find(id);
   },
 };
 

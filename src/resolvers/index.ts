@@ -12,9 +12,7 @@ const indexResolver = {
      *
      * @returns {string}
      */
-    health: (): string => {
-      return 'ok';
-    },
+    health: (): string => 'ok',
   },
 };
 

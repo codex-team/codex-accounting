@@ -32,7 +32,7 @@ export default class AccountRepository implements IAccountRepository {
    *
    * @param id - account identifier
    */
-  public async getAccount(id: string): Promise<Account|null> {
+  public async find(id: string): Promise<Account|null> {
     const data = await this.collection.findOne({
       id: id,
     });
@@ -53,9 +53,10 @@ export default class AccountRepository implements IAccountRepository {
    */
   public async create(name: string, type: AccountType, currency: Currency): Promise<Account> {
     const data = {
-      name: name,
-      type: type,
-      currency: currency,
+      name,
+      type,
+      currency,
+      dtCreated: Date.now(),
     } as AccountConstructorData;
 
     const account = new Account(data);
@@ -66,6 +67,8 @@ export default class AccountRepository implements IAccountRepository {
       type: account.type,
       currency: account.currency,
       dtCreated: account.dtCreated,
+    }).catch(err => {
+      throw err;
     });
 
     return account;

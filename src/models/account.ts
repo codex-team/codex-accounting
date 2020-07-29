@@ -104,28 +104,27 @@ export class Account extends BaseModel {
 
     if (!data.id) {
       this.id = uuidv4();
-      this.dtCreated = Date.now();
     } else {
       this.id = data.id;
-      this.dtCreated = data.dtCreated;
     }
 
     this.name = data.name;
     this.type = data.type;
     this.currency = data.currency;
+    this.dtCreated = data.dtCreated;
   }
 
   /**
    * Returns true if it is debit account
    */
-  public isDebitAccount(): boolean {
+  public isDebit(): boolean {
     return debitAccounts.indexOf(this.type) !== -1;
   }
 
   /**
    * Returns true if it is credit account
    */
-  public isCreditAccount(): boolean {
+  public isCredit(): boolean {
     return creditAccounts.indexOf(this.type) !== -1;
   }
 }
