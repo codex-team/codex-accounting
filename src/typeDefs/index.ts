@@ -4,6 +4,9 @@ import Account from './account';
 import Entry from './entry';
 import Transaction from './transaction';
 import scalars from './scalars';
+import AccountType from './accountType';
+import Operation from './operation';
+import AccountMutations from './accountMutations';
 
 const rootSchema = gql`
   """
@@ -35,5 +38,8 @@ export default concatenateTypeDefs(
     Account,
     Entry,
     Transaction,
+    AccountType,
+    Operation,
+    AccountMutations,
   ]
 );

@@ -1,7 +1,7 @@
-import { Account, AccountType } from '../../models/account';
+import { Account, AccountConstructorData, AccountType } from '../../models/account';
 import { IAccountRepository } from '../interfaces/accountRepository';
 import { Currency } from '../../types/currency';
-import { Db } from 'mongodb';
+import { Collection, Db } from 'mongodb';
 
 /**
  * This class is concrete implementation of IAccountRepository that uses MongoDB as a storage
@@ -13,30 +13,64 @@ export default class AccountRepository implements IAccountRepository {
   private db: Db;
 
   /**
+   * Accounts persistent storage collection
+   */
+  private collection: Collection;
+
+  /**
    * Creates account repository instance
    *
    * @param db - MongoDB client
    */
   constructor(db: Db) {
     this.db = db;
+    this.collection = this.db.collection('accounts');
   }
 
   /**
-   * Fetches MongoDB to get AccountData and returns Account Model
+   * Fetches MongoDB to get AccountConstructorData and returns Account Model
    *
    * @param id - account identifier
    */
-  public getAccount(id: string): Account {
-    // @todo Here we fetch MongoDB to get account data and dr/cr amount
-    // const account = await this.db.collection('account').findOne({ id: id });
-
-    return new Account({
+  public async find(id: string): Promise<Account|null> {
+    const data = await this.collection.findOne({
       id: id,
-      name: 'Workspace account',
-      type: AccountType.Liability,
-      currency: Currency.USD,
-      drAmount: 200,
-      crAmount: 400,
     });
+
+    if (!data) {
+      return null;
+    }
+
+    return new Account(data);
+  }
+
+  /**
+   * Persists new account
+   *
+   * @param name - account name
+   * @param type - account type
+   * @param currency - account currency
+   */
+  public async create(name: string, type: AccountType, currency: Currency): Promise<Account> {
+    const data = {
+      name,
+      type,
+      currency,
+      dtCreated: Date.now(),
+    } as AccountConstructorData;
+
+    const account = new Account(data);
+
+    await this.collection.insertOne({
+      id: account.id,
+      name: account.name,
+      type: account.type,
+      currency: account.currency,
+      dtCreated: account.dtCreated,
+    }).catch(err => {
+      throw err;
+    });
+
+    return account;
   }
 }

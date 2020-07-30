@@ -31,4 +31,11 @@ export default gql`
     """
     history: [Operation!]!
   }
+
+  extend type Query {
+    """
+    Pass AccountQueries as a namespace for accounts
+    """
+    getAccount(id: ID!): Account
+  }
 `;
