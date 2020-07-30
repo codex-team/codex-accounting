@@ -83,6 +83,9 @@ class AccountantServer {
 
         return error;
       },
+      /**
+       * Pass global resolvers context (each resolver will have an access to the context properties by third param)
+       */
       context: (): ResolverContextBase => this.createContext(),
     });
 

@@ -1,4 +1,4 @@
-import { Account, AccountData, AccountType } from '../../models/account';
+import { Account, AccountConstructorData, AccountType } from '../../models/account';
 import { IAccountRepository } from '../interfaces/accountRepository';
 import { Currency } from '../../types/currency';
 import { Collection, Db } from 'mongodb';
@@ -28,11 +28,11 @@ export default class AccountRepository implements IAccountRepository {
   }
 
   /**
-   * Fetches MongoDB to get AccountData and returns Account Model
+   * Fetches MongoDB to get AccountConstructorData and returns Account Model
    *
    * @param id - account identifier
    */
-  public async getAccount(id: string): Promise<Account|null> {
+  public async find(id: string): Promise<Account|null> {
     const data = await this.collection.findOne({
       id: id,
     });
@@ -47,22 +47,28 @@ export default class AccountRepository implements IAccountRepository {
   /**
    * Persists new account
    *
-   * @param name
-   * @param type
-   * @param currency
+   * @param name - account name
+   * @param type - account type
+   * @param currency - account currency
    */
   public async create(name: string, type: AccountType, currency: Currency): Promise<Account> {
     const data = {
-      name: name,
-      type: type,
-      currency: currency,
-    } as AccountData;
+      name,
+      type,
+      currency,
+      dtCreated: Date.now(),
+    } as AccountConstructorData;
 
     const account = new Account(data);
 
     await this.collection.insertOne({
       id: account.id,
-      ...data,
+      name: account.name,
+      type: account.type,
+      currency: account.currency,
+      dtCreated: account.dtCreated,
+    }).catch(err => {
+      throw err;
     });
 
     return account;
