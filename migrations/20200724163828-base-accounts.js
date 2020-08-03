@@ -11,15 +11,15 @@ module.exports = {
    */
   async up(db, client) {
     const cashbook = {
-      id: '22354b8a-b501-44ed-bff0-d3bd8d899dbf',
-      name: 'Hawk cashbook',
+      id: process.env.CASHBOOK_ACCOUNT_ID,
+      name: 'Hawk Cashbook account',
       type: 'Asset',
       currency: 'USD',
     };
 
     const revenue = {
-      id: '953fb6fd-5a86-4c34-9587-abd493b1175e',
-      name: 'Hawk revenue',
+      id: process.env.REVENUE_ACCOUNT_ID,
+      name: 'Hawk Revenue account',
       type: 'Revenue',
       currency: 'USD',
     };
@@ -37,11 +37,11 @@ module.exports = {
    */
   async down(db, client) {
     db.collection('accounts').remove({
-      id: '22354b8a-b501-44ed-bff0-d3bd8d899dbf',
+      id: process.env.CASHBOOK_ACCOUNT_ID,
     });
 
     db.collection('accounts').remove({
-      id: '953fb6fd-5a86-4c34-9587-abd493b1175e',
+      id: process.env.REVENUE_ACCOUNT_ID,
     });
   },
 };
