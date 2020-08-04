@@ -1,6 +1,9 @@
 /**
  * Migration creates base accounting accounts such as Cashbook and revenue
  */
+import {AccountType} from "../src/models/account";
+import {Currency} from "../src/types/currency";
+
 module.exports = {
   /**
    * Create Cashbook and Revenue accounts with USD currency
@@ -13,15 +16,15 @@ module.exports = {
     const cashbook = {
       id: process.env.CASHBOOK_ACCOUNT_ID,
       name: 'Hawk Cashbook account',
-      type: 'Asset',
-      currency: 'USD',
+      type: AccountType.Asset,
+      currency: Currency.USD,
     };
 
     const revenue = {
       id: process.env.REVENUE_ACCOUNT_ID,
       name: 'Hawk Revenue account',
-      type: 'Revenue',
-      currency: 'USD',
+      type: AccountType.Revenue,
+      currency: Currency.USD,
     };
 
     db.collection('accounts').insertOne(cashbook);
