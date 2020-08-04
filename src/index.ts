@@ -1,7 +1,11 @@
 import AccountantServer from './server';
 import HawkCatcher from '@hawk.so/nodejs';
 import dotenv from 'dotenv';
+import yamlConfig from "./types/yamlConfig";
 dotenv.config();
+
+const config = yamlConfig.getInstance();
+config.load()
 
 /**
  * Enable HawkCatcher

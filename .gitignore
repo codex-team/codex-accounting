@@ -104,3 +104,4 @@ dist
 
 .idea
 globalConfig.json
+config/config.yaml

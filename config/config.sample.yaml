@@ -1,0 +1,10 @@
+accounts:
+  cashbook:
+    id: ""
+    name: "Hawk Cashbook account"
+    curreny: "USD"
+
+  revenue:
+    id: ""
+    name: "Hawk Revenue account"
+    currency: "USD"
