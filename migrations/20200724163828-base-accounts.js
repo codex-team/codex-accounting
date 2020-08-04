@@ -15,14 +15,14 @@ module.exports = {
   async up(db, client) {
     const cashbook = {
       id: process.env.CASHBOOK_ACCOUNT_ID,
-      name: 'Hawk Cashbook account',
+      name: process.env.CASHBOOK_ACCOUNT_NAME,
       type: AccountType.Asset,
       currency: Currency.USD,
     };
 
     const revenue = {
       id: process.env.REVENUE_ACCOUNT_ID,
-      name: 'Hawk Revenue account',
+      name: process.env.REVENUE_ACCOUNT_NAME,
       type: AccountType.Revenue,
       currency: Currency.USD,
     };
