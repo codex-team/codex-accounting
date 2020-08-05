@@ -10,7 +10,7 @@ export interface IAccountRepository {
    *
    * @param id - account identifier
    */
-  getAccount(id: string): Promise<Account|null>;
+  find(id: string): Promise<Account|null>;
 
   /**
    * Creates new Account

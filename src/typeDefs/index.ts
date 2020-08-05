@@ -8,8 +8,6 @@ import AccountType from './accountType';
 import Operation from './operation';
 import AccountMutations from './accountMutations';
 import DepositMutations from './depositMutations';
-import PurchaseMutations from './purchaseMutations';
-import WithdrawMutations from './withdrawMutations';
 
 const rootSchema = gql`
   """
