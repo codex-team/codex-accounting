@@ -1,7 +1,7 @@
 import merge from 'lodash.merge';
 import scalars from './scalars';
 import accounts from './accounts';
-import deposits from "./deposits";
+import deposits from './deposits';
 
 /**
  * See all types and fields here {@link ../typeDefs/}

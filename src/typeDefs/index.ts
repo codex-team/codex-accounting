@@ -43,7 +43,5 @@ export default concatenateTypeDefs(
     Operation,
     AccountMutations,
     DepositMutations,
-    // PurchaseMutations,
-    // WithdrawMutations
   ]
 );

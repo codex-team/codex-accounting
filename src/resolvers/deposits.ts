@@ -29,14 +29,19 @@ interface DepositMutationParams {
 }
 
 const Mutation = {
+  /**
+   * Desposit resolver: increases account balance
+   *
+   * @param parent - request parent object
+   * @param input - mutation object
+   * @param repositories - entity repositories from global context
+   */
   async deposit(
     parent: undefined,
     { input }: DepositMutationParams,
     { repositories }: ResolverContextBase
   ): Promise<null|{recordId: string; record: Transaction}> {
-    const accountId = input.accountId;
-    const amount = input.amount;
-    const description = input.description;
+    const { accountId, amount, description } = input;
 
     const accountRepository = repositories.account;
     const transactionRepository = repositories.transaction;

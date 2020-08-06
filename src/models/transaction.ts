@@ -1,6 +1,7 @@
 import { Entry, EntryType } from './entry';
 import { Account } from './account';
 import { v4 as uuidv4 } from 'uuid';
+import { PENNY_MULTIPLIER } from '../types/currency';
 
 /**
  * Available transaction types
@@ -116,7 +117,7 @@ export default class Transaction {
       type: EntryType.Dr,
       accountId: account.id,
       transactionId: this.id,
-      amount: amount * 100,
+      amount: amount * PENNY_MULTIPLIER,
     });
 
     this.add(entry);
@@ -137,7 +138,7 @@ export default class Transaction {
       type: EntryType.Cr,
       accountId: account.id,
       transactionId: this.id,
-      amount: amount * 100,
+      amount: amount * PENNY_MULTIPLIER,
     });
 
     this.add(entry);
