@@ -1,4 +1,4 @@
-import Transaction from '../../models/transaction';
+import Transaction, { TransactionData } from '../../models/transaction';
 import { ITransactionRepository } from '../interfaces/transactionRepository';
 import { Db } from 'mongodb';
 
@@ -27,7 +27,7 @@ export default class TransactionRepository implements ITransactionRepository {
    *
    * @param transaction - target transaction
    */
-  public commit(transaction: Transaction): void {
+  public async commit(transaction: Transaction): Promise<void> {
     if (transaction.isLocked()) {
       throw new Error('Transaction already posted');
     }
@@ -36,15 +36,15 @@ export default class TransactionRepository implements ITransactionRepository {
       throw new Error('Transaction is not balanced');
     }
 
-    // const data = {
-    //   id: transaction.id,
-    //   type: transaction.type,
-    //   description: transaction.description,
-    //   dtCreated: transaction.dtCreated,
-    //   entries: transaction.entries,
-    // } as TransactionData;
-    // await this.db.collection('transaction').insertOne(data);
-    // @todo Store to the MongoDB
+    const data = {
+      id: transaction.id,
+      type: transaction.type,
+      description: transaction.description,
+      dtCreated: transaction.dtCreated,
+      entries: transaction.entries,
+    } as TransactionData;
+
+    await this.db.collection('transactions').insertOne(data);
 
     /** lock transaction */
     transaction.lock();

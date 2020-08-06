@@ -14,6 +14,11 @@ export default gql`
     Positive number to increase account balance
     """
     amount: NonNegativeInt!
+
+    """
+    Operation purpose or description
+    """
+    description: String
   }
 
   """

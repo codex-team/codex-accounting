@@ -1,6 +1,7 @@
 import merge from 'lodash.merge';
 import scalars from './scalars';
 import accounts from './accounts';
+import deposits from './deposits';
 
 /**
  * See all types and fields here {@link ../typeDefs/}
@@ -16,4 +17,4 @@ const indexResolver = {
   },
 };
 
-export default merge(indexResolver, scalars, accounts);
+export default merge(indexResolver, scalars, accounts, deposits);
