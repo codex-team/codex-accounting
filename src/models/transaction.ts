@@ -1,5 +1,7 @@
 import { Entry, EntryType } from './entry';
 import { Account } from './account';
+import { v4 as uuidv4 } from 'uuid';
+import { PENNY_MULTIPLIER } from '../types/currency';
 
 /**
  * Available transaction types
@@ -8,17 +10,17 @@ export enum TransactionType {
   /**
    * Transaction that increases account and cashbook
    */
-  Deposit,
+  Deposit = 'Deposit',
 
   /**
    * Transaction that decreases account and cashbook
    */
-  Withdrawal,
+  Withdraw = 'Withdraw',
 
   /**
    * Tranasction that decreases account and increases our revenue
    */
-  Purchase
+  Purchase = 'Purchase'
 }
 
 /**
@@ -28,27 +30,27 @@ export interface TransactionData {
   /**
    * Transaction unique identifier (UUIDv4)
    */
-  id: string;
+  id?: string;
 
   /**
    * One of the transaction type described above
    */
-  type: TransactionType;
+  type?: TransactionType;
 
   /**
    * Short transaction purpose
    */
-  description: string;
+  description?: string;
 
   /**
    * Transaction creation datetime
    */
-  dtCreated: number;
+  dtCreated?: number;
 
   /**
    * Transaction entries
    */
-  entries: Entry[];
+  entries?: Entry[];
 }
 
 /**
@@ -63,12 +65,12 @@ export default class Transaction {
   /**
    * One of listed transaction types
    */
-  public readonly type: TransactionType;
+  public readonly type: TransactionType = TransactionType.Deposit;
 
   /**
    * Creation date as unixtime
    */
-  public readonly dtCreated: number;
+  public readonly dtCreated: number = Date.now();
 
   /**
    * Transaction entries
@@ -89,17 +91,17 @@ export default class Transaction {
    * @param data - transaction payload
    */
   constructor(data: TransactionData) {
-    if (data.id.trim() === '') {
-      this.id = 'generated UUIDv4';
+    if (!data.id) {
+      this.id = uuidv4();
     } else {
       this.id = data.id;
       this.posted = true;
     }
 
-    this.type = data.type;
-    this.dtCreated = data.dtCreated;
-    this.description = data.description;
-    this.entries = data.entries;
+    this.type = data.type || this.type;
+    this.dtCreated = data.dtCreated || this.dtCreated;
+    this.description = data.description || this.description;
+    this.entries = data.entries || this.entries;
   }
 
   /**
@@ -115,7 +117,7 @@ export default class Transaction {
       type: EntryType.Dr,
       accountId: account.id,
       transactionId: this.id,
-      amount: amount,
+      amount: amount * PENNY_MULTIPLIER,
     });
 
     this.add(entry);
@@ -136,7 +138,7 @@ export default class Transaction {
       type: EntryType.Cr,
       accountId: account.id,
       transactionId: this.id,
-      amount: amount,
+      amount: amount * PENNY_MULTIPLIER,
     });
 
     this.add(entry);

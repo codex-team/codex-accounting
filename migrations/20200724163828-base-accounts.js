@@ -15,6 +15,7 @@ module.exports = {
       name: process.env.CASHBOOK_ACCOUNT_NAME,
       type: 'Asset',
       currency: 'USD',
+      dtCreated: Date.now()
     };
 
     const revenue = {
@@ -22,6 +23,7 @@ module.exports = {
       name: process.env.REVENUE_ACCOUNT_NAME,
       type: 'Revenue',
       currency: 'USD',
+      dtCreated: Date.now()
     };
 
     db.collection('accounts').insertOne(cashbook);
