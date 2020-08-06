@@ -1,6 +1,6 @@
 import { Entry, EntryType } from './entry';
 import { Account } from './account';
-import {v4 as uuidv4} from "uuid";
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Available transaction types
@@ -9,17 +9,17 @@ export enum TransactionType {
   /**
    * Transaction that increases account and cashbook
    */
-  Deposit,
+  Deposit = 'Deposit',
 
   /**
    * Transaction that decreases account and cashbook
    */
-  Withdrawal,
+  Withdraw = 'Withdraw',
 
   /**
    * Tranasction that decreases account and increases our revenue
    */
-  Purchase
+  Purchase = 'Purchase'
 }
 
 /**
@@ -90,18 +90,17 @@ export default class Transaction {
    * @param data - transaction payload
    */
   constructor(data: TransactionData) {
-    this.id = uuidv4();
-    // if (data.id && data.id.trim() === '') {
-    //   this.id = 'generated UUIDv4';
-    // } else {
-    //   this.id = data.id;
-    //   this.posted = true;
-    // }
-    //
-    // this.type = data.type;
-    // this.dtCreated = data.dtCreated;
-    // this.description = data.description;
-    // this.entries = data.entries;
+    if (!data.id) {
+      this.id = uuidv4();
+    } else {
+      this.id = data.id;
+      this.posted = true;
+    }
+
+    this.type = data.type || this.type;
+    this.dtCreated = data.dtCreated || Date.now();
+    this.description = data.description || '';
+    this.entries = data.entries || [];
   }
 
   /**
@@ -117,7 +116,7 @@ export default class Transaction {
       type: EntryType.Dr,
       accountId: account.id,
       transactionId: this.id,
-      amount: amount,
+      amount: amount * 1000,
     });
 
     this.add(entry);
@@ -138,7 +137,7 @@ export default class Transaction {
       type: EntryType.Cr,
       accountId: account.id,
       transactionId: this.id,
-      amount: amount,
+      amount: amount * 1000,
     });
 
     this.add(entry);
