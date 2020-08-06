@@ -69,7 +69,7 @@ export default class Transaction {
   /**
    * Creation date as unixtime
    */
-  public readonly dtCreated: number = 1111;
+  public readonly dtCreated: number = Date.now();
 
   /**
    * Transaction entries
@@ -98,9 +98,9 @@ export default class Transaction {
     }
 
     this.type = data.type || this.type;
-    this.dtCreated = data.dtCreated || Date.now();
-    this.description = data.description || '';
-    this.entries = data.entries || [];
+    this.dtCreated = data.dtCreated || this.dtCreated;
+    this.description = data.description || this.description;
+    this.entries = data.entries || this.entries;
   }
 
   /**
@@ -116,7 +116,7 @@ export default class Transaction {
       type: EntryType.Dr,
       accountId: account.id,
       transactionId: this.id,
-      amount: amount * 1000,
+      amount: amount * 100,
     });
 
     this.add(entry);
@@ -137,7 +137,7 @@ export default class Transaction {
       type: EntryType.Cr,
       accountId: account.id,
       transactionId: this.id,
-      amount: amount * 1000,
+      amount: amount * 100,
     });
 
     this.add(entry);

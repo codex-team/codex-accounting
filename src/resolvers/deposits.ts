@@ -41,7 +41,13 @@ const Mutation = {
     const accountRepository = repositories.account;
     const transactionRepository = repositories.transaction;
 
-    const cashbook = await accountRepository.find('22354b8a-b501-44ed-bff0-d3bd8d899dbf');
+    const cashbookId = process.env.CASHBOOK_ACCOUNT_ID as string;
+
+    if (!cashbookId) {
+      return null;
+    }
+
+    const cashbook = await accountRepository.find(cashbookId);
     const account = await accountRepository.find(accountId);
 
     if (cashbook === null || account === null) {

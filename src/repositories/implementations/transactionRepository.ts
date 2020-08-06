@@ -1,4 +1,4 @@
-import Transaction, {TransactionData} from '../../models/transaction';
+import Transaction, { TransactionData } from '../../models/transaction';
 import { ITransactionRepository } from '../interfaces/transactionRepository';
 import { Db } from 'mongodb';
 

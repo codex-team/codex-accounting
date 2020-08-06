@@ -15,7 +15,7 @@ export default class AccountRepository implements IAccountRepository {
   /**
    * Accounts persistent storage collection
    */
-  private accountsCollection: Collection;
+  private collection: Collection;
 
   /**
    * Creates account repository instance
@@ -24,7 +24,7 @@ export default class AccountRepository implements IAccountRepository {
    */
   constructor(db: Db) {
     this.db = db;
-    this.accountsCollection = this.db.collection('accounts');
+    this.collection = this.db.collection('accounts');
   }
 
   /**
@@ -33,7 +33,7 @@ export default class AccountRepository implements IAccountRepository {
    * @param id - account identifier
    */
   public async find(id: string): Promise<Account|null> {
-    const data = await this.accountsCollection.findOne({
+    const data = await this.collection.findOne({
       id: id,
     });
 
@@ -61,7 +61,7 @@ export default class AccountRepository implements IAccountRepository {
 
     const account = new Account(data);
 
-    await this.accountsCollection.insertOne({
+    await this.collection.insertOne({
       id: account.id,
       name: account.name,
       type: account.type,
