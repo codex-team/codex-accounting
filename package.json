@@ -7,6 +7,8 @@
   "license": "Apache-2.0",
   "scripts": {
     "dev": "ts-node-dev src/index.ts",
+    "docker:up": "docker-compose -f docker-compose.dev.yml up",
+    "docker:down": "docker-compose -f docker-compose.dev.yml down",
     "test": "jest --coverage",
     "build": "tsc",
     "lint-test": "eslint -c ./.eslintrc.js src/ --ext .ts,.js",
