@@ -14,6 +14,11 @@ export default gql`
     The cost of service or payment amount
     """
     amount: NonNegativeInt!
+
+    """
+    Operation purpose or description
+    """
+    description: String
   }
 
   """
