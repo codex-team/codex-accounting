@@ -1,6 +1,7 @@
 import merge from 'lodash.merge';
 import scalars from './scalars';
 import accounts from './accounts';
+import purchaseMutations from './purchaseMutations';
 import deposits from './deposits';
 
 /**
@@ -17,4 +18,4 @@ const indexResolver = {
   },
 };
 
-export default merge(indexResolver, scalars, accounts, deposits);
+export default merge(indexResolver, scalars, accounts, purchaseMutations, deposits);
