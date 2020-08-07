@@ -16,7 +16,7 @@ interface WithdrawMutationInput {
   amount: number;
 
   /**
-   * Deposit purpose: short description of operation
+   * Withdraw purpose: short description of operation
    */
   description: string;
 }
