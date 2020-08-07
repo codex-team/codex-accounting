@@ -14,6 +14,11 @@ export default gql`
     Withdrawing amount (account currency will be used)
     """
     amount: NonNegativeInt!
+
+    """
+    Operation purpose or description
+    """
+    description: String
   }
 
   """
