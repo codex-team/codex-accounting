@@ -1,5 +1,6 @@
 import { ResolverContextBase } from '../types/graphql';
 import Transaction, { TransactionType } from '../models/transaction';
+import { UserInputError } from 'apollo-server-express';
 
 interface PurchaseMutationInput {
   /**
@@ -37,7 +38,7 @@ const Mutation = {
     parent: undefined,
     { input }: PurchaseMutationParams,
     { repositories }: ResolverContextBase
-  ): Promise<null|{recordId: string; record: Transaction}> {
+  ): Promise<{recordId: string; record: Transaction}> {
     const { accountId, amount, description } = input;
 
     const accountRepository = repositories.account;
@@ -46,14 +47,17 @@ const Mutation = {
     const revenueId = process.env.REVENUE_ACCOUNT_ID as string;
 
     if (!revenueId) {
-      return null;
+      throw new Error('Revenue ID does not found.');
     }
 
     const revenue = await accountRepository.find(revenueId);
     const account = await accountRepository.find(accountId);
 
-    if (revenue === null || account === null) {
-      return null;
+    if (revenue === null) {
+      throw new Error('Revenue account does not found.');
+    }
+    if (account === null) {
+      throw new UserInputError('Account with this ID does not found.');
     }
 
     const transaction = new Transaction({
@@ -68,7 +72,7 @@ const Mutation = {
     try {
       transactionRepository.commit(transaction);
     } catch (e) {
-      return null;
+      throw new Error('Transaction committing is failed.');
     }
 
     return {
