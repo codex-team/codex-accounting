@@ -4,7 +4,8 @@ Microservice for accounting📋
 ## How to run accounting service
 
 1. Copy and rename file `.env.sample` to `.env`.
-2. Add information about cashbook and revenue to `.env` file:
+2. Generate two UUIDv4 IDs for cashbook and revenue accounts. You can use online generators (see https://www.uuidgenerator.net/version4).
+3. Add information about cashbook and revenue to `.env` file:
 
     Example:
     ```dotenv
@@ -16,9 +17,9 @@ Microservice for accounting📋
     REVENUE_ACCOUNT_ID=#Your UUIDv4 revenue account ID
     REVENUE_ACCOUNT_NAME="Hawk Revenue account"
     ```
-3. Install dependencies by `yarn install`.
-4. Run accounting service by `yarn dev` or `yarn docker:up` commands.
-5. Run MongoDB migrations by `yarn migrate:up`.
+4. Install dependencies by `yarn install`.
+5. Run accounting service by `yarn dev` or `yarn docker:up` commands.
+6. Run MongoDB migrations by `yarn migrate:up`.
 
     You will see a message like this:
     ```text
