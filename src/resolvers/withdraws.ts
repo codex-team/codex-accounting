@@ -1,5 +1,6 @@
 import { ResolverContextBase } from '../types/graphql';
 import Transaction, { TransactionType } from '../models/transaction';
+import { UserInputError } from 'apollo-server-express';
 
 /**
  * Mutation input declaration
@@ -40,7 +41,7 @@ const Mutation = {
     parent: undefined,
     { input }: WithdrawMutationParams,
     { repositories }: ResolverContextBase
-  ): Promise<null|{recordId: string; record: Transaction}> {
+  ): Promise<{recordId: string; record: Transaction}> {
     const { accountId, amount, description } = input;
 
     const accountRepository = repositories.account;
@@ -49,14 +50,17 @@ const Mutation = {
     const cashbookId = process.env.CASHBOOK_ACCOUNT_ID as string;
 
     if (!cashbookId) {
-      return null;
+      throw new Error('Cashbook ID does not found.');
     }
 
     const cashbook = await accountRepository.find(cashbookId);
     const account = await accountRepository.find(accountId);
 
-    if (cashbook === null || account === null) {
-      return null;
+    if (cashbook === null) {
+      throw new Error('Cashbook account does not found.');
+    }
+    if (account === null) {
+      throw new UserInputError('Account with this ID does not found.');
     }
 
     const transaction = new Transaction({
@@ -71,7 +75,7 @@ const Mutation = {
     try {
       transactionRepository.commit(transaction);
     } catch (e) {
-      return null;
+      throw new Error('Transaction committing is failed.');
     }
 
     return {
