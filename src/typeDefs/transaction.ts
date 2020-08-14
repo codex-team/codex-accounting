@@ -13,7 +13,7 @@ export default gql`
     """
     Removing out
     """
-    Withdrawal
+    Withdraw
 
     """
     Payment for something
