@@ -31,7 +31,7 @@ interface DepositMutationParams {
 
 const Mutation = {
   /**
-   * Desposit resolver: increases account balance
+   * Deposit resolver: increases account balance
    *
    * @param parent - request parent object
    * @param input - mutation object
