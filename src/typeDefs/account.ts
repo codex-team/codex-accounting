@@ -32,7 +32,7 @@ export default gql`
     balance(
       from: DateTime,
       to: DateTime
-    ): Float!
+    ): Balance!
 
     """
     Last operations with account (deposits, purchases or others)

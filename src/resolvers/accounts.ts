@@ -2,6 +2,7 @@ import { ResolverContextBase } from '../types/graphql';
 import { Account, AccountType } from '../models/account';
 import { Currency } from '../types/currency';
 import { DateRange } from '../types/date';
+import { Balance } from '../types/balance';
 
 /**
  * Concrete create mutation input declaration
@@ -72,10 +73,13 @@ const AccountProps = {
     parent: Account,
     range: DateRange,
     { repositories }: ResolverContextBase
-  ): Promise<number> {
+  ): Promise<Balance> {
     const transactionsRepository = repositories.transaction;
+    const amount = await transactionsRepository.findBalanceForAccount(parent.id, range);
 
-    return transactionsRepository.findBalanceForAccount(parent.id, range);
+    return {
+      amount
+    };
   },
 };
 
