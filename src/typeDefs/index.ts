@@ -1,6 +1,7 @@
 import { gql, concatenateTypeDefs } from 'apollo-server-express';
 import Currency from './currency';
 import Account from './account';
+import Balance from './balance';
 import Entry from './entry';
 import Transaction from './transaction';
 import scalars from './scalars';
@@ -38,6 +39,7 @@ export default concatenateTypeDefs(
     rootSchema,
     scalars,
     Currency,
+    Balance,
     Account,
     Entry,
     Transaction,

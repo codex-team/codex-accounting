@@ -1,6 +1,8 @@
 import { ResolverContextBase } from '../types/graphql';
 import { Account, AccountType } from '../models/account';
 import { Currency } from '../types/currency';
+import { DateRange } from '../types/date';
+import { Balance } from '../types/balance';
 
 /**
  * Concrete create mutation input declaration
@@ -59,6 +61,28 @@ const AccountMutations = {
   },
 };
 
+const AccountProps = {
+  /**
+   * Method returns accounts balance
+   *
+   * @param parent - Account to find balance for
+   * @param range - date range by which transactions should be filtered
+   * @param repositories - model repositories from global context
+   */
+  async balance(
+    parent: Account,
+    range: DateRange,
+    { repositories }: ResolverContextBase
+  ): Promise<Balance> {
+    const transactionsRepository = repositories.transaction;
+    const amount = await transactionsRepository.findBalanceForAccount(parent, range);
+
+    return {
+      amount,
+    };
+  },
+};
+
 const Query = {
   /**
    * Method returns account by identifier
@@ -83,6 +107,7 @@ const Mutation = {
 };
 
 export default {
+  Account: AccountProps,
   Mutation,
   Query,
   AccountMutations,
