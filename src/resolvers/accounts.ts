@@ -75,10 +75,10 @@ const AccountProps = {
     { repositories }: ResolverContextBase
   ): Promise<Balance> {
     const transactionsRepository = repositories.transaction;
-    const amount = await transactionsRepository.findBalanceForAccount(parent.id, range);
+    const amount = await transactionsRepository.findBalanceForAccount(parent, range);
 
     return {
-      amount
+      amount,
     };
   },
 };

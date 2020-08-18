@@ -4,6 +4,7 @@ import { Collection, Db, FilterQuery } from 'mongodb';
 import { EntryType } from '../../models/entry';
 import { PENNY_MULTIPLIER } from '../../types/currency';
 import { DateRange } from '../../types/date';
+import { Account } from '../../models/account';
 
 /**
  * Concrete ITransactionRepository implementation. Uses MongoDB
@@ -62,11 +63,11 @@ export default class TransactionRepository implements ITransactionRepository {
   /**
    * Finds all transactions for given account and time range and calculates balance by summing debit and credit entries
    *
-   * @param accountId - id of account to find balance for
+   * @param account - account to find balance for
    * @param range - date range by which transactions should be filtered
    */
-  public async findBalanceForAccount(accountId: string, range: DateRange = { to: new Date() }): Promise<number> {
-    const { from, to = new Date() } = range;
+  public async findBalanceForAccount(account: Account, range?: DateRange): Promise<number> {
+    const { from, to = new Date() } = range || {};
 
     const timeFilter: FilterQuery<Transaction>[] = [
       { dtCreated: { $lte: +to } },
@@ -87,7 +88,7 @@ export default class TransactionRepository implements ITransactionRepository {
       },
       {
         $match: {
-          'entries.accountId': accountId,
+          'entries.accountId': account.id,
         },
       },
       {
@@ -106,6 +107,8 @@ export default class TransactionRepository implements ITransactionRepository {
       return 0;
     }
 
-    return (accountData.cr - accountData.dr) / PENNY_MULTIPLIER;
+    const diff = accountData.cr - accountData.dr;
+
+    return (account.isCredit() ? diff : -diff) / PENNY_MULTIPLIER;
   }
 }

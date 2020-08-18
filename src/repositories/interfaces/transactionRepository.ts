@@ -1,5 +1,6 @@
 import Transaction from '../../models/transaction';
 import { DateRange } from '../../types/date';
+import { Account } from '../../models/account';
 
 /**
  * High level TransactionRepository interface
@@ -15,8 +16,8 @@ export interface ITransactionRepository {
   /**
    * Returns balance calculated from transactions for passed account
    *
-   * @param accountId - account to find balance for
+   * @param account - account to find balance for
    * @param range - date range to filter transactions
    */
-  findBalanceForAccount(accountId: string, range?: DateRange): Promise<number>;
+  findBalanceForAccount(account: Account, range?: DateRange): Promise<number>;
 }
