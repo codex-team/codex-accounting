@@ -1,6 +1,7 @@
 import { ResolverContextBase } from '../types/graphql';
 import Transaction, { TransactionType } from '../models/transaction';
 import { UserInputError } from 'apollo-server-express';
+import { NonCriticalError } from '../errors';
 
 /**
  * Mutation input declaration
@@ -50,17 +51,17 @@ const Mutation = {
     const cashbookId = process.env.CASHBOOK_ACCOUNT_ID as string;
 
     if (!cashbookId) {
-      throw new Error('Cashbook ID does not found.');
+      throw new NonCriticalError('Cashbook ID does not found.');
     }
 
     const cashbook = await accountRepository.find(cashbookId);
     const account = await accountRepository.find(accountId);
 
     if (cashbook === null) {
-      throw new Error('Cashbook account does not found.');
+      throw new NonCriticalError('Cashbook account does not found.');
     }
     if (account === null) {
-      throw new UserInputError('Account with this ID does not found.');
+      throw new UserInputError('Account with such ID does not exist.');
     }
 
     const transaction = new Transaction({
@@ -75,7 +76,7 @@ const Mutation = {
     try {
       transactionRepository.commit(transaction);
     } catch (e) {
-      throw new Error('Transaction committing is failed.');
+      throw new NonCriticalError('Transaction committing is failed.', e);
     }
 
     return {
