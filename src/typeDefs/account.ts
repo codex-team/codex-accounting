@@ -27,6 +27,14 @@ export default gql`
     dtCreated: DateTime!
 
     """
+    Account balance
+    """
+    balance(
+      from: DateTime,
+      to: DateTime
+    ): Balance!
+
+    """
     Last operations with account (deposits, purchases or others)
     """
     history: [Operation!]!
