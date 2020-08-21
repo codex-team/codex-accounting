@@ -4,6 +4,8 @@ import { accounts } from '../mockedData/accounts';
 import deposits from '../../src/resolvers/deposits';
 import TransactionRepository from '../../src/repositories/implementations/transactionRepository';
 import AccountRepository from '../../src/repositories/implementations/accountRepository';
+import { ResolverContextBase } from '../../src/types/graphql';
+import getAccountBalance from '../utils/getAccountBalance';
 
 describe('Deposits mutation', () => {
   if (!process.env.MONGO_ACCOUNTING_DATABASE_URI) {
@@ -21,9 +23,20 @@ describe('Deposits mutation', () => {
 
   const db = new DatabaseController(process.env.MONGO_ACCOUNTING_DATABASE_URI);
 
+  /**
+   * Resolver context with repositories
+   */
+  let context: ResolverContextBase | null;
+
   beforeAll(async () => {
     console.log('connect in tests');
     await db.connect();
+    context = {
+      repositories: {
+        transaction: new TransactionRepository(db.getConnection()),
+        account: new AccountRepository(db.getConnection()),
+      },
+    };
   });
 
   afterAll(async () => {
@@ -31,11 +44,18 @@ describe('Deposits mutation', () => {
   });
 
   it('should execute deposit mutation', async () => {
+    if (!context) {
+      console.error('Context with repositories does not exist.');
+      process.exit(1);
+    }
+
     /**
      * Insert mocked data to database
      */
     await db.getConnection().collection('accounts')
       .insertMany(accounts);
+
+    const accountBalanceBeforeMutation = await getAccountBalance('36749b61-0906-4374-9739-121c82678769', context);
 
     const mutationResult = await deposits.Mutation.deposit(undefined, {
       input: {
@@ -50,10 +70,13 @@ describe('Deposits mutation', () => {
       },
     });
 
+    const accountBalanceAfterMutation = await getAccountBalance('36749b61-0906-4374-9739-121c82678769', context);
+
     expect(mutationResult).not.toBe(null);
     expect(mutationResult?.recordId).not.toBe(null);
     expect(mutationResult?.record.type).toEqual('Deposit');
     expect(mutationResult?.record.description).toEqual('Deposit mutation');
     expect(mutationResult?.record.dtCreated).not.toBe(null);
+    expect(accountBalanceAfterMutation - accountBalanceBeforeMutation).toEqual(20);
   });
 });
