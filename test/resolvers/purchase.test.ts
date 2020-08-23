@@ -6,6 +6,9 @@ import AccountRepository from '../../src/repositories/implementations/accountRep
 import { accounts } from '../mockedData/accounts';
 import getAccountBalance from '../utils/getAccountBalance';
 import purchases from '../../src/resolvers/purchases';
+import createAccount from '../utils/createAccount';
+import { AccountType } from '../../src/models/account';
+import { Currency } from '../../src/types/currency';
 
 describe('Purchase mutation', () => {
   if (!process.env.MONGO_ACCOUNTING_DATABASE_URI) {
@@ -55,17 +58,26 @@ describe('Purchase mutation', () => {
     await db.getConnection().collection('accounts')
       .insertMany(accounts);
 
-    const accountBalanceBeforeMutation = await getAccountBalance('36749b61-0906-4374-9739-121c82678769', context);
+    /**
+     * Creates user account for test
+     */
+    const { recordId } = await createAccount({
+      name: 'Test account',
+      type: AccountType.Liability,
+      currency: Currency.USD,
+    }, context);
+
+    const accountBalanceBeforeMutation = await getAccountBalance(recordId, context);
 
     const mutationResult = await purchases.Mutation.purchase(undefined, {
       input: {
-        accountId: '36749b61-0906-4374-9739-121c82678769',
+        accountId: recordId,
         description: 'Purchase mutation',
         amount: 20,
       },
     }, context);
 
-    const accountBalanceAfterMutation = await getAccountBalance('36749b61-0906-4374-9739-121c82678769', context);
+    const accountBalanceAfterMutation = await getAccountBalance(recordId, context);
 
     expect(mutationResult).not.toBe(null);
     expect(mutationResult?.recordId).not.toBe(null);
