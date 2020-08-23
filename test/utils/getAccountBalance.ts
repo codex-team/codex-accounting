@@ -11,7 +11,7 @@ export default async function getAccountBalance(accountId: string, context: Reso
   const account = await accounts.Query.getAccount(undefined, { id: accountId }, context);
 
   if (!account) {
-    console.error('Account does not found.');
+    console.error('Account does not exist.');
     process.exit(1);
   }
   const balance = await accounts.Account.balance(account, {}, context);

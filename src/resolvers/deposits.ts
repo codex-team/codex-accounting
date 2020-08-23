@@ -1,5 +1,7 @@
 import { ResolverContextBase } from '../types/graphql';
 import Transaction, { TransactionType } from '../models/transaction';
+import { UserInputError } from 'apollo-server-express';
+import { NonCriticalError } from '../errors';
 
 /**
  * Mutation input declaration
@@ -30,7 +32,7 @@ interface DepositMutationParams {
 
 const Mutation = {
   /**
-   * Desposit resolver: increases account balance
+   * Deposit resolver: increases account balance
    *
    * @param parent - request parent object
    * @param input - mutation object
@@ -40,7 +42,7 @@ const Mutation = {
     parent: undefined,
     { input }: DepositMutationParams,
     { repositories }: ResolverContextBase
-  ): Promise<null|{recordId: string; record: Transaction}> {
+  ): Promise<{recordId: string; record: Transaction}> {
     const { accountId, amount, description } = input;
 
     const accountRepository = repositories.account;
@@ -49,14 +51,17 @@ const Mutation = {
     const cashbookId = process.env.CASHBOOK_ACCOUNT_ID as string;
 
     if (!cashbookId) {
-      return null;
+      throw new NonCriticalError('Cashbook ID does not found.');
     }
 
     const cashbook = await accountRepository.find(cashbookId);
     const account = await accountRepository.find(accountId);
 
-    if (cashbook === null || account === null) {
-      return null;
+    if (cashbook === null) {
+      throw new NonCriticalError('Cashbook account does not found.');
+    }
+    if (account === null) {
+      throw new UserInputError('Account with such ID does not exist.');
     }
 
     const transaction = new Transaction({
@@ -71,7 +76,7 @@ const Mutation = {
     try {
       transactionRepository.commit(transaction);
     } catch (e) {
-      return null;
+      throw new NonCriticalError('Transaction committing is failed.', e);
     }
 
     return {
