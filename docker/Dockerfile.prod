@@ -21,4 +21,4 @@ COPY  ./migrations/ ./migrations/
 COPY  migrate-mongo-config.js ./
 COPY  package.json ./
 
-CMD ["node", "src/index.js"]
+CMD ["node", "index.js"]
