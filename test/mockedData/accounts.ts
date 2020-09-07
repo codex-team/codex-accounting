@@ -16,11 +16,4 @@ export const accounts = [
     currency: 'USD',
     dtCreated: 1597340498560,
   },
-  {
-    id: '36749b61-0906-4374-9739-121c82678769',
-    name: 'Test user account',
-    type: 'Liability',
-    currency: 'USD',
-    dtCreated: 1597340498560,
-  },
 ];

@@ -1,16 +1,16 @@
 import '../../src/env-test';
 import { DatabaseController } from '../../src/controller';
-import { accounts } from '../mockedData/accounts';
-import deposits from '../../src/resolvers/deposits';
+import { ResolverContextBase } from '../../src/types/graphql';
 import TransactionRepository from '../../src/repositories/implementations/transactionRepository';
 import AccountRepository from '../../src/repositories/implementations/accountRepository';
-import { ResolverContextBase } from '../../src/types/graphql';
+import { accounts } from '../mockedData/accounts';
 import getAccountBalance from '../utils/getAccountBalance';
+import withdraws from '../../src/resolvers/withdraws';
 import createAccount from '../utils/createAccount';
 import { AccountType } from '../../src/models/account';
 import { Currency } from '../../src/types/currency';
 
-describe('Deposits mutation', () => {
+describe('Withdraw mutation', () => {
   if (!process.env.MONGO_ACCOUNTING_DATABASE_URI) {
     console.error('Please, specify mongodb uri via .env MONGO_ACCOUNTING_DATABASE_URI option');
     process.exit(1);
@@ -46,7 +46,7 @@ describe('Deposits mutation', () => {
     await db.close();
   });
 
-  it('should execute deposit mutation', async () => {
+  it('should execute withdraw mutation', async () => {
     if (!context) {
       console.error('Context with repositories does not exist.');
       process.exit(1);
@@ -69,10 +69,10 @@ describe('Deposits mutation', () => {
 
     const accountBalanceBeforeMutation = await getAccountBalance(recordId, context);
 
-    const mutationResult = await deposits.Mutation.deposit(undefined, {
+    const mutationResult = await withdraws.Mutation.withdraw(undefined, {
       input: {
         accountId: recordId,
-        description: 'Deposit mutation',
+        description: 'Withdraw mutation',
         amount: 20,
       },
     }, context);
@@ -81,9 +81,9 @@ describe('Deposits mutation', () => {
 
     expect(mutationResult).not.toBe(null);
     expect(mutationResult?.recordId).not.toBe(null);
-    expect(mutationResult?.record.type).toEqual('Deposit');
-    expect(mutationResult?.record.description).toEqual('Deposit mutation');
+    expect(mutationResult?.record.type).toEqual('Withdraw');
+    expect(mutationResult?.record.description).toEqual('Withdraw mutation');
     expect(mutationResult?.record.dtCreated).not.toBe(null);
-    expect(accountBalanceAfterMutation - accountBalanceBeforeMutation).toEqual(20);
+    expect(accountBalanceAfterMutation - accountBalanceBeforeMutation).toEqual(-20);
   });
 });
