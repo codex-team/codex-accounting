@@ -74,7 +74,7 @@ const Mutation = {
       .credit(account, amount);
 
     try {
-      transactionRepository.commit(transaction);
+      await transactionRepository.commit(transaction);
     } catch (e) {
       throw new NonCriticalError('Transaction committing is failed.', e);
     }

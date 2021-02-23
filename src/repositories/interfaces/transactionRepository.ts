@@ -11,7 +11,7 @@ export interface ITransactionRepository {
    *
    * @param transaction
    */
-  commit(transaction: Transaction): void;
+  commit(transaction: Transaction): Promise<void>;
 
   /**
    * Returns balance calculated from transactions for passed account
