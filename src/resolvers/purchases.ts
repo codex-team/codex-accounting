@@ -70,7 +70,7 @@ const Mutation = {
       .credit(revenue, amount);
 
     try {
-      transactionRepository.commit(transaction);
+      await transactionRepository.commit(transaction);
     } catch (e) {
       throw new Error('Transaction committing is failed.');
     }
