@@ -21,9 +21,3 @@ jobs:
           tag_with_ref: true
           dockerfile: docker/Dockerfile.prod
           push: ${{ endsWith(github.ref, '/stage') || endsWith(github.ref, '/prod') }}
-
-      - name: Deploy stage
-        if: endsWith(github.ref, '/stage')
-        run: |
-          curl --user ${{ secrets.DEPLOY_HAWK_STAGE_AUTH }} ${{ secrets.DEPLOY_HAWK_STAGE_ADDRESS }}?image=${{ env.DOCKER_REPO }}:stage
-
