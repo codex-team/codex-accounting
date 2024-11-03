@@ -1,0 +1,22 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.accounts = void 0;
+/**
+ * @file Data for database with three accounts (cashbook, revenue and user account)
+ */
+exports.accounts = [
+    {
+        id: 'b0dbe2f4-246a-4dfc-8b6d-cdfe1f0171f6',
+        name: 'Hawk Cashbook account',
+        type: 'Asset',
+        currency: 'USD',
+        dtCreated: 1597340498560,
+    },
+    {
+        id: '61988880-d52d-441b-9655-ac7e35cf06f1',
+        name: 'Hawk Revenue account',
+        type: 'Revenue',
+        currency: 'USD',
+        dtCreated: 1597340498560,
+    },
+];

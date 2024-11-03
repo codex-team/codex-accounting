@@ -1,0 +1,9 @@
+"use strict";
+var __makeTemplateObject = (this && this.__makeTemplateObject) || function (cooked, raw) {
+    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+    return cooked;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var apollo_server_express_1 = require("apollo-server-express");
+exports.default = apollo_server_express_1.gql(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  \"\"\"\n  Available entry types\n  \"\"\"\n  enum EntryType {\n    \"\"\"\n    Debit record\n    \"\"\"\n    DR\n\n    \"\"\"\n    Credit record\n    \"\"\"\n    CR\n  }\n\n  \"\"\"\n  The single record of the transaction\n  Debit or credit\n  \"\"\"\n  type Entry {\n    \"\"\"\n    Entry identifier\n    \"\"\"\n    id: ID!\n\n    \"\"\"\n    Debit or credit\n    \"\"\"\n    type: EntryType!\n\n    \"\"\"\n    Related account\n    \"\"\"\n    account: Account!\n\n    \"\"\"\n    In which transaction this entry did appeared\n    \"\"\"\n    transaction: Transaction!\n\n    \"\"\"\n    Positive value of the record in minumal currency value (cents)\n    \"\"\"\n    amount: NonNegativeInt!\n  }\n"], ["\n  \"\"\"\n  Available entry types\n  \"\"\"\n  enum EntryType {\n    \"\"\"\n    Debit record\n    \"\"\"\n    DR\n\n    \"\"\"\n    Credit record\n    \"\"\"\n    CR\n  }\n\n  \"\"\"\n  The single record of the transaction\n  Debit or credit\n  \"\"\"\n  type Entry {\n    \"\"\"\n    Entry identifier\n    \"\"\"\n    id: ID!\n\n    \"\"\"\n    Debit or credit\n    \"\"\"\n    type: EntryType!\n\n    \"\"\"\n    Related account\n    \"\"\"\n    account: Account!\n\n    \"\"\"\n    In which transaction this entry did appeared\n    \"\"\"\n    transaction: Transaction!\n\n    \"\"\"\n    Positive value of the record in minumal currency value (cents)\n    \"\"\"\n    amount: NonNegativeInt!\n  }\n"])));
+var templateObject_1;

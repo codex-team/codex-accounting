@@ -1,0 +1,9 @@
+"use strict";
+var __makeTemplateObject = (this && this.__makeTemplateObject) || function (cooked, raw) {
+    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+    return cooked;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var apollo_server_express_1 = require("apollo-server-express");
+exports.default = apollo_server_express_1.gql(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  enum OperationType {\n    \"\"\"\n    The type that increased account balance\n    \"\"\"\n    Increase\n\n    \"\"\"\n    The type that decreased account balance\n    \"\"\"\n    Decrease\n  }\n\n  \"\"\"\n  Account single ledger operation\n  \"\"\"\n  type Operation {\n    \"\"\"\n    Transaction identifier\n    \"\"\"\n    transactionId: String!\n\n    \"\"\"\n    Increase or decrease operation\n    \"\"\"\n    type: OperationType!\n\n    \"\"\"\n    Operation description\n    \"\"\"\n    description: String!\n\n    \"\"\"\n    Operation date\n    \"\"\"\n    dtCreated: DateTime!\n\n    \"\"\"\n    Positive value of the record in minimal currency value (cents)\n    \"\"\"\n    amount: NonNegativeInt!\n  }\n"], ["\n  enum OperationType {\n    \"\"\"\n    The type that increased account balance\n    \"\"\"\n    Increase\n\n    \"\"\"\n    The type that decreased account balance\n    \"\"\"\n    Decrease\n  }\n\n  \"\"\"\n  Account single ledger operation\n  \"\"\"\n  type Operation {\n    \"\"\"\n    Transaction identifier\n    \"\"\"\n    transactionId: String!\n\n    \"\"\"\n    Increase or decrease operation\n    \"\"\"\n    type: OperationType!\n\n    \"\"\"\n    Operation description\n    \"\"\"\n    description: String!\n\n    \"\"\"\n    Operation date\n    \"\"\"\n    dtCreated: DateTime!\n\n    \"\"\"\n    Positive value of the record in minimal currency value (cents)\n    \"\"\"\n    amount: NonNegativeInt!\n  }\n"])));
+var templateObject_1;
