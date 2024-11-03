@@ -89,7 +89,7 @@ export class Account extends BaseModel {
   /**
    * Account currency
    */
-  public readonly currency: Currency = Currency.USD;
+  public readonly currency: Currency = Currency.RUB;
 
   /**
    * Account creation time

@@ -10,5 +10,10 @@ export default gql`
     All amounts will be stored in cents.
     """
     USD
+
+    """
+    Roubles.
+    """
+    RUB
   }
 `;
